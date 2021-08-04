@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Login - Index-Pharmalivery</title>
+    </head>
+    <body>
+        <form method="POST" action="/user/signin">
+            <input type="text" name="username" placeholder="Digite seu cpf">
+            <input type="password" name="password" placeholder="Digite sua senha">
+            <input type="hidden" name="destination" value="/">
+            <button type="submit">Login</button>
+            {{userData.usuario}}
+        </form>
+        <a href="/"><button>Index</button></a>
+    </body>
+</html>
