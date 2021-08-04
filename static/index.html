@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <!-- Pegar Icon de remédio ou fazer-->
+        <title>Index-Pharmalivery</title>
+    </head>
+    <body>
+        Oi bem-vindo
+        {% if userData %}
+        {{userData.usuario}}
+        <a><button>Configurações da conta</button></a>
+        <a href="/logout?destination=/"><button>Sair</button></a>
+        {% endif %}
+        <a href="/user/Login/"><button>Login</button></a>
+    </body>
+</html>
