@@ -1,0 +1,94 @@
+//Usar com a extensão do vscode
+//Tomar cuidado na porta usada
+POST http://localhost:4000/user/signin/ HTTP/1.1
+content-type: application/json
+
+{
+    "username":"dummy",
+    "password":"dummy"
+}
+
+###
+//Teste de autenticação do token JWT
+POST http://localhost:4000/user/signin/ HTTP/1.1
+content-type: application/json
+
+{
+    "jwtpass": "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImR1bW15IiwidGVsZWZvbmUiOiJkdW1teSIsImlkIjoyLCJ1c3VhcmlvIjoiZHVtbXkifQ.Q9XwugjqICjciqu-r8jdRjy18aLds8e0_oQWQY9KM7o"    
+}
+
+###
+// Teste de cadastro do usuario
+POST http://localhost:3000/signup/ HTTP/1.1
+content-type: application/json
+
+{
+    "type":"usuario",
+    "username":"dummy",
+    "password": "dummy",
+    "email": "dummy",
+    "cpf": "dummy",
+    "phone_num": "dummy"
+}
+###
+POST http://localhost:3000/signup/ HTTP/1.1
+content-type: application/json
+
+{
+    "type":"loja",
+    "senha":"pedro123",
+    "nome_fantasia":"e",
+    "cnpj":"pedro",
+    "insc_estadualef":"dummy",
+    "site":"dummy",
+    "email":"pedro",
+    "cep":"dummy",
+    "endereco":"dummy",
+    "numero":"xablau",
+    "bairro":"eofmfe",
+    "cidade":"effeefasa",
+    "estado":"ew",
+    "telefone":"fefef",
+    "celular":"efe"
+}
+###
+POST http://localhost:3000/loja/signin/ HTTP/1.1
+content-type: application/json
+
+{
+     "cnpj":"pedro",
+     "password":"pedro123"
+}
+###
+POST http://localhost:3000/loja/signin/ HTTP/1.1
+content-type: application/json
+
+{
+    "jwtpass":"eyJhbGciOiJIUzI1NiJ9.eyJub21lX2ZhbnRhc2lhIjoiZSIsIm5vdGEiOjAsImNucGoiOiJwZWRybyIsInNlbmhhIjoiNzcwODYyNTIzODIyMjA4ZTM5YmJlZjMzMzNiMjc5MWViM2NkMjFjMWMxYTRiODcwNGRjNGI4YjFmMGRiMTY3NjVmNTZlYmZiMjVkMGRjMTIzMDgwOWNiNjBlYjM1ZWQzODA1YWI0NTgxODQyZmNjMDU2NjRiODMzMDhkYjFkY2EiLCJpbnNjX2VzdGFkdWFsIjoidW5kZWZpbmVkIiwic2l0ZSI6ImR1bW15IiwiZW1haWwiOiJwZWRybyIsImNlcCI6ImR1bW15IiwiZW5kZXJlY28iOiJkdW1teSIsIm51bWVybyI6InhhYmxhIiwiYmFpcnJvIjoiZW9mbWZlIiwiY2lkYWRlIjoiZWZmZWVmYXNhIiwiZXN0YWRvIjoiZXciLCJ0ZWxlZm9uZSI6ImZlZmVmIiwiY2VsdWxhciI6ImVmZSIsImlkIjoxNH0.3FZ8NzgYRWVA8tMWpr4Y8X5SOmUycre_oJxm0dOghfI"
+}
+###
+POST http://localhost:3000/loja/produto HTTP/1.1
+content-type: application/json
+
+{
+    "jwtpass":"eyJhbGciOiJIUzI1NiJ9.eyJub21lX2ZhbnRhc2lhIjoiZSIsIm5vdGEiOjAsImNucGoiOiJwZWRybyIsInNlbmhhIjoiNzcwODYyNTIzODIyMjA4ZTM5YmJlZjMzMzNiMjc5MWViM2NkMjFjMWMxYTRiODcwNGRjNGI4YjFmMGRiMTY3NjVmNTZlYmZiMjVkMGRjMTIzMDgwOWNiNjBlYjM1ZWQzODA1YWI0NTgxODQyZmNjMDU2NjRiODMzMDhkYjFkY2EiLCJpbnNjX2VzdGFkdWFsIjoidW5kZWZpbmVkIiwic2l0ZSI6ImR1bW15IiwiZW1haWwiOiJwZWRybyIsImNlcCI6ImR1bW15IiwiZW5kZXJlY28iOiJkdW1teSIsIm51bWVybyI6InhhYmxhIiwiYmFpcnJvIjoiZW9mbWZlIiwiY2lkYWRlIjoiZWZmZWVmYXNhIiwiZXN0YWRvIjoiZXciLCJ0ZWxlZm9uZSI6ImZlZmVmIiwiY2VsdWxhciI6ImVmZSIsImlkIjoxNH0.3FZ8NzgYRWVA8tMWpr4Y8X5SOmUycre_oJxm0dOghfI",
+    "nome":"efe",
+    "desc":"Funfa, confia",
+    "preco":15.6,
+    "lab":"Fundo do quintal"
+}
+###
+GET http://localhost:3000/loja/produto HTTP/1.1
+content-type: application/json
+
+{
+    "loja_id":"14"
+}
+###
+DELETE  http://localhost:3000/loja/produto HTTP/1.1
+content-type: application/json
+
+{
+    "jwtpass":"eyJhbGciOiJIUzI1NiJ9.eyJub21lX2ZhbnRhc2lhIjoiZSIsIm5vdGEiOjAsImNucGoiOiJwZWRybyIsInNlbmhhIjoiNzcwODYyNTIzODIyMjA4ZTM5YmJlZjMzMzNiMjc5MWViM2NkMjFjMWMxYTRiODcwNGRjNGI4YjFmMGRiMTY3NjVmNTZlYmZiMjVkMGRjMTIzMDgwOWNiNjBlYjM1ZWQzODA1YWI0NTgxODQyZmNjMDU2NjRiODMzMDhkYjFkY2EiLCJpbnNjX2VzdGFkdWFsIjoidW5kZWZpbmVkIiwic2l0ZSI6ImR1bW15IiwiZW1haWwiOiJwZWRybyIsImNlcCI6ImR1bW15IiwiZW5kZXJlY28iOiJkdW1teSIsIm51bWVybyI6InhhYmxhIiwiYmFpcnJvIjoiZW9mbWZlIiwiY2lkYWRlIjoiZWZmZWVmYXNhIiwiZXN0YWRvIjoiZXciLCJ0ZWxlZm9uZSI6ImZlZmVmIiwiY2VsdWxhciI6ImVmZSIsImlkIjoxNH0.3FZ8NzgYRWVA8tMWpr4Y8X5SOmUycre_oJxm0dOghfI",
+    "id_produto":"11"
+}
