@@ -20,7 +20,7 @@ router.post('/user/signin/', (req,res) => {
             if (err) {
                 throw err;
             } else if (results) {
-                if (results[0] == undefined) {res.statusCode=404;res.send("Not found");return(0);}     
+                if (results[0] == undefined) {res.statusCode=404;res.render('./login.html',{error:'Usuario ou senha incorretos'});return(0);}     
                 //Remover as informacoes senviveis antes de transformar em string
                 results[0].cpf = undefined;results[0].senha = undefined;
                 let user = JSON.stringify(results[0]);
@@ -31,27 +31,57 @@ router.post('/user/signin/', (req,res) => {
             }
         });
     } else {
-        res.statusCode = 401;res.send("campos vazios"+JSON.stringify(req.body));
+        res.statusCode = 401;res.redirect(req.body.destination);
     }
     
 })
 
 router.get('/user/login', (req,res) => {
-    //console.log("cookie: ",req.headers.cookie.split('; '), breakCookie(req.headers.cookie));
-    let userData = JWT.verify(breakCookie(req.headers.cookie).key,require('../index.js').JWTPrivateKey)
-    //console.log(userData)
-    return(res.render('login.html',{"userData": userData}))
+    let user = new userData();
+    let userInfo = user.getJWtByCookie(req);
+    console.log(userInfo)
+    return(res.render('login.html',{"userData": userInfo}))
 
 })
 //Instead of downloading a package
-function breakCookie(cookie) {
-    let cookies = cookie.split('; ');
-    let finalCookie = {};
-    for (var x=0;x<cookies.length;x++) {
-        let element = cookies[x].split('=');
-        finalCookie[element[0]] = element[1];
-    }
-    return(finalCookie)
-}
+ 
 
+//Getting userData Utils
+class userData {
+    constructor () {
+        // Nothing to put inside here
+    }
+    // undefined == req empty ; false == JWT invalid; other == UserData
+    getJWtByCookie(req) {
+        let cookies = undefined;
+        if (req.cookie) {
+            cookies = breackCookie(req.cookie);
+        } else {
+            return(undefined)
+        }
+        try {
+            let userData = JWT.verify(cookies.key,require('../index.js').JWTPrivateKey);
+            return(userData)
+        } catch (err) {
+            throw (err);
+            return(false);
+        }
+
+    }
+
+    breakCookie(cookie) {
+        try{
+            let cookies = cookie.split('; ');
+            let finalCookie = {};
+            for (var x=0;x<cookies.length;x++) {
+                let element = cookies[x].split('=');
+                finalCookie[element[0]] = element[1];
+            }
+        } catch (err) {
+            return(false)
+        }
+        return(finalCookie)
+    }a
+}
 module.exports = router;
+module.exports.user = userData;

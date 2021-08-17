@@ -1,6 +1,9 @@
-router = require('express').Router();
+const express = require('express')
+const router = require('express').Router();
 const hash = require('hash.js');
 const db = require('../db.js');
+const JWT = require('jsonwebtoken')
+router.use(express.urlencoded({ extended: false}));
 router.post('/signup/', (req,res) => {
     switch(req.body.type) {
         case 'loja':
@@ -22,25 +25,31 @@ router.post('/signup/', (req,res) => {
             break;
 
         case 'usuario':
-                
+            let wantedUserData = ['username','cpf','email','email2','telefone','senha','senha2'];
+            let checkData = check_req(wantedUserData,[]); 
+            if (checkData == false) {res.code = 401;res.render('cadastro.html',{error:"Dados Vazios"});return(0)}
+            // *TODO: Trocar todo res.send para res.render bobalhão
+            if (req.body.email != req.body.email2) {res.statusCode = 401;res.render('cadastro.html',{error:"<strong>Email</strong> não correspondente"});return(0)}
+            if (req.body.senha != req.body.senha2) {res.statuscode = 401;res.render('cadastro.html',{error:"<strong>Senha</strong> não correspondente"});return(0)}
+            if (8>req.body.senha.lenght || req.body.senha > 16) {res.statuscode = 401;res.render('cadastro.html',{error:"A <strong>Senha</strong> deve ser maior que 8 e menor de 16 caracteres"});return(0)}
             const username = req.body.username; 
-            const password = hash.sha512().update(req.body.password).digest('hex');
+            const password = hash.sha512().update(req.body.senha).digest('hex');
             const email = req.body.email;
             const cpf = req.body.cpf;  
-            const phone_num = req.body.phone_num; 
+            const phone_num = req.body.telefone; 
 
 
             let query = "INSERT INTO `users` (`cpf`, `email`, `telefone`, `usuario`, `senha`) VALUES ('"+cpf+"', '"+email+"', '"+phone_num+"', '"+username+"', '"+password+"');";
             let signupQuery = db.query(query, (err) => {
                 if (err) {
-                    if (err.code == "ER_DUP_ENTRY") {res.statusCode = 500;res.send("ja cadastrado")};
+                    if (err.code == "ER_DUP_ENTRY") {res.statusCode = 500;res.render('cadastro.html',{error:"Usuario já cadastrado"});return(0)};
                 } else {
-                    // 200 - OK 
-                    res.statusCode = 200
-                    res.send("Operation ok");
+                    res.redirect('/')
                 }
             });
+            
             break;
+
         default:
             res.statusCode = 401;
             res.send("tipo desconhecido");return(0);
@@ -48,8 +57,11 @@ router.post('/signup/', (req,res) => {
     }
 })
 
-module.exports = router;
+router.get('/cadastro', (req,res) => {
+    res.render('cadastro.html', {})
+})
 
+module.exports = router;
 
 //Verifica entradas no request e analiza elas com uma whitelist
 function check_req(wantedData,uselessData) {

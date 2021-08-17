@@ -10,6 +10,15 @@
             function delete_cookie (name) {
                      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'; 
                 };
+                var url = new URL(window.location.href.toLowerCase())
+
+                if (url.searchParams.get("destination")) {
+                    window.location.href = url.searchParams.get("destination")
+                } else {
+                    window.location.href = url.searchParams.get("/")
+                }
+                
+
         </script>
     </body>
 </html>
