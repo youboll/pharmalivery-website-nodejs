@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Pharmalivery</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+        <script>
+            function formatar(mascara, documento){
+              var i = documento.value.length;
+              var saida = mascara.substring(0,1);
+              var texto = mascara.substring(i)
+              
+              if (texto.substring(0,1) != saida){
+                        documento.value += texto.substring(0,1);
+              }
+              
+            }
+        </script>
+        <script type="text/javascript">
+            $("#telefone, #celular").mask("(00) 0000-00000");
+        </script>
+    </head>
+    <body>
+        <form action="/signup" method="POST">
+            {% if error%}
+                {% block err%}
+                    <div class="error">{{error | safe}}</div>
+                {% endblock %}
+            {% endif%}
+            <input type="text" name="username" placeholder="Digite seu nome"><br>
+            <input type="text" name="cpf" maxlength="14" OnKeyPress="formatar('###.###.###-##', this)" placeholder="Digite seu cpf"><br>
+            <input type="email" name="email" placeholder="Digite seu email"><br>
+            <input type="email" name="email2" placeholder="Confirme seu email"><br>
+            <input type="text" name="telefone" class="form-control" placeholder="Digite seu telefone" id="celular"  ><br>
+            <input type="password" name="senha" placeholder="Digite sua senha"><br>          
+            <input type="password" name="senha2" placeholder="Confirme sua senha"><br> 
+            <input type="hidden" name="type" value="usuario">
+            <button>Cadastrar</button><br>  
+        </form>
+    </body>
+</html>

@@ -1,10 +1,11 @@
 const Router = require('express').Router();
 const JWT = require('jsonwebtoken')
 Router.get('/', (req,res) => {
+    let userData = undefined;
     try {
-    let userData = JWT.verify(breakCookie(req.headers.cookie).key,require('../index.js').JWTPrivateKey);
+        userData = JWT.verify(breakCookie(req.headers.cookie).key,require('../index.js').JWTPrivateKey);
     } catch(e) {
-    let userData = false;
+        userData = false;
     }
     res.render('index.html',{"userData": userData});
 })
