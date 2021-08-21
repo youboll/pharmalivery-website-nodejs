@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title>Pharmalivery</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    </head>
+    <script>
+        $(document).ready(function(){	
+		    $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $("#telefone, #celular").mask("(00) 0000-00000");
+	    });
+    </script>
+    <body>
+        <form action="/signup/" method="POST">
+            {% if error %}
+                <div class="error"> {{error | safe}}</div>
+            {% endif %}
+            <input type="text" name="nome_fantasia" placeholder="Nome fantasia"><br>
+            <input type="text" name="cnpj" placeholder="Cnpj" id="cnpj"><br>
+            <input type="text" name="insc_estadual" placeholder="Inscrição estadual"><br>
+            <input type="text" name="site" placeholder="Website da empresa"><br>
+            <input type="text" name="email" placeholder="Email"><br>
+            <input type="text" name="email2" placeholder="Confirme o email"><br>
+            <!-- Trocar por form custominizado--><input type="text" name="cep" placeholder="CEP" id="cep"><br>
+            <input type="text" name="endereco" placeholder="Endereço"><br>
+            <input type="text" name="numero" placeholder="Numero"><br>
+            <input type="text" name="bairro" placeholder="Bairro"><br>
+            <input type="text" name="cidade" placeholder="cidade"><br>
+            <label for="uf">Estado</label>
+            <select id="uf" name="estado">
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+            </select><br>
+            <input type="text" name="telefone" placeholder="Telefone" id="telefone"><br>
+            <input type="text" name="celular" placeholder="Celular"><br>
+            <input type="password" name="senha" placeholder="Senha"><br>
+            <input type="password" name="senha2" placeholder="Confirme sua senha"><br>
+            <input type="hidden" name="type" value="loja"><br>
+            <button type="submit">Efetuar cadastro</button>
+
+
+
+            
+        </form>
+    </body>
+</html>

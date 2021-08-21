@@ -1,16 +1,12 @@
 const router = require('express').Router();
+const express = require('express')
 //Faz a importação 
 const index = require('../index');
 const hash = require('hash.js');
 const db = require('../db.js');
 const JWT = require('jsonwebtoken');
+router.use(express.urlencoded({ extended: false}));
 router.post('/loja/signin', (req,res) => {
-    if (req.body.jwtpass) {
-        let tokenTry = checkToken(req);
-        if (tokenTry === false) {res.statusCode = 401;res.send("Login incorreto");return(0);}
-        res.json(tokenTry);
-        return(0);
-    }
     if (req.body.cnpj && req.body.password) {
         const password = hash.sha512().update(req.body.password).digest('hex');
         let sql = "SELECT * FROM `loja` WHERE `cnpj` = '"+req.body.cnpj+"' and `senha` = '"+password+"';";
@@ -20,14 +16,22 @@ router.post('/loja/signin', (req,res) => {
             }
             if (results) {
                 if (results[0] == undefined) {res.statusCode = 401;res.send("Login incorreto");return(0);}
-                let token = JWT.sign(JSON.stringify(results[0]),index.JWTPrivateKey);
-                res.send(token);
+                let token = JWT.sign(JSON.stringify(results[0]['type'] = "loja"),index.JWTPrivateKey);
+                res.cookie('key',token);
+                if (req.body.destination) {res.redirect(req.body.destination)} else {
+                    res.redirect('/')
+                }
                }
         })
     } else {
-        res.statusCode = 410;res.send("Dados vazios");return(0);
+        // Exemplo de erro
+        res.render('lojaLogin.html', {error:"Campos Vazios"})
     }
 })
+router.get('/loja/login',(req,res) => {
+    res.render('lojaLogin.html',{})
+})
+
 // Route de produtos no estilo CRUD ---- O mesmo link só muda o metodo
 router.post('/loja/produto', (req,res) => {
     let wanted_info = ['nome','desc','lab','JWTKey','preco'];
@@ -82,6 +86,9 @@ router.delete('/loja/produto', (req,res) => {
      
         
 })
+router.get('/loja/cadastro', (req,res) => {
+    res.render('lojaCadastro.html')
+})
 module.exports = router;
 
 //Erro consertado: Não pode retornar valores no callback -- Passar para variavel intermediaria
@@ -100,15 +107,13 @@ function checkToken (req,sensitive = false) {
     })
     return(resu);
 }
-function check_req(wantedData,uselessData) {
-
-    for (var x=0;x<wantedData.lenght;x++) {
-        if ( req.body.hasOwnProperty(wantedData[x])) {
-        
-        } else {
-            if (uselessData.includes(wantedData[x]) == false) {console.log(wantedData[x]);return(false);}
+function check_req(wantedData,request) {
+    for (var x=0;x<wantedData.length;x++) {
+        //console.log('aieou')
+        if (request[wantedData[x]] == "") {
+           return(false)
         }
+
     }
-
-
+    //return(true)
 }

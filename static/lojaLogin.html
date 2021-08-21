@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
+        <title>Pharmalivery</title>
+        <script>
+             $("#cnpj").mask("99.999.999/9999-99");
+        </script>
+    </head>
+    <body>
+        {% if error%}
+            <div class="error">{{error | safe}}</div>
+        {% endif %}
+        <form action="/loja/signin" method="POST">
+            <input type="text" name="cnpj" placeholder="Digite seu CNPJ" id="cnpj"><br>
+            <input type="password" name="password" placeholder="Digite sua senha">
+            <button type="submit">Login</button>
+        </form>
+    </body>
+</html>
