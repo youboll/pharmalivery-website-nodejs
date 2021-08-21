@@ -23,7 +23,7 @@ router.post('/user/signin/', (req,res) => {
                 if (results[0] == undefined) {res.statusCode=404;res.render('./login.html',{error:'Usuario ou senha incorretos'});return(0);}     
                 //Remover as informacoes senviveis antes de transformar em string
                 results[0].cpf = undefined;results[0].senha = undefined;
-                let user = JSON.stringify(results[0]);
+                let user = JSON.stringify(results[0]['type'] = "usuario");
                 let token = JWT.sign(user,require('../index.js').JWTPrivateKey);
                 res.statusCode=200;
                 res.cookie('key',token);

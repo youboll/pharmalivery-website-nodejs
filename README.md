@@ -6,5 +6,8 @@ Não me julge
 --- Todo ---
 
     * Refazer sistema de cadastro do usuario e linkar com formulario (FEITO)
+  
+    * Fazer cadastro da loja (Feito) e adicionar produtos
+  
+    * Concertar cadastro de loja (Feito)
     
-    * Fazer cadastro da loja e adiocionar produtos
