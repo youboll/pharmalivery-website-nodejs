@@ -11,3 +11,7 @@ Não me julge
   
     * Concertar cadastro de loja (Feito)
     
+    *Trocar o banco de dado
+
+    *Criar gerenciador de estoque
+

@@ -22,8 +22,9 @@ router.post('/user/signin/', (req,res) => {
             } else if (results) {
                 if (results[0] == undefined) {res.statusCode=404;res.render('./login.html',{error:'Usuario ou senha incorretos'});return(0);}     
                 //Remover as informacoes senviveis antes de transformar em string
-                results[0].cpf = undefined;results[0].senha = undefined;
-                let user = JSON.stringify(results[0]['type'] = "usuario");
+                results[0].senha = undefined;
+                results[0].type= "usuario"
+                let user = JSON.stringify(results[0]);
                 let token = JWT.sign(user,require('../index.js').JWTPrivateKey);
                 res.statusCode=200;
                 res.cookie('key',token);
@@ -39,7 +40,7 @@ router.post('/user/signin/', (req,res) => {
 router.get('/user/login', (req,res) => {
     let user = new userData();
     let userInfo = user.getJWtByCookie(req);
-    console.log(userInfo)
+    console.log("Dados do usuario: ",userInfo)
     return(res.render('login.html',{"userData": userInfo}))
 
 })
@@ -54,34 +55,28 @@ class userData {
     // undefined == req empty ; false == JWT invalid; other == UserData
     getJWtByCookie(req) {
         let cookies = undefined;
-        if (req.cookie) {
-            cookies = breackCookie(req.cookie);
+        if (req.headers.cookie) {
+            cookies = this.breakCookie(req.headers.cookie);
         } else {
             return(undefined)
         }
-        try {
-            let userData = JWT.verify(cookies.key,require('../index.js').JWTPrivateKey);
-            return(userData)
-        } catch (err) {
-            throw (err);
-            return(false);
-        }
+        let userData = JWT.verify(cookies.key,require('../index.js').JWTPrivateKey);
+        return(userData)
+        
 
     }
 
     breakCookie(cookie) {
-        try{
-            let cookies = cookie.split('; ');
-            let finalCookie = {};
-            for (var x=0;x<cookies.length;x++) {
-                let element = cookies[x].split('=');
-                finalCookie[element[0]] = element[1];
-            }
-        } catch (err) {
-            return(false)
+        if (cookie == undefined) { return(false);}
+        let cookies = cookie.split('; ');
+        let finalCookie = {};
+        for (var x=0;x<cookies.length;x++) {
+            let element = cookies[x].split('=');
+            finalCookie[element[0]] = element[1];
         }
         return(finalCookie)
-    }a
+    }
 }
 module.exports = router;
-module.exports.user = userData;
+module.exports.userJWT = userData;
+module.exports.breakCookie = userData.breakCookie
