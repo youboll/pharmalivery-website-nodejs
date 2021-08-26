@@ -5,13 +5,22 @@
     </head>
     <body>
         Oi bem-vindo
-        {% if userData %}
+        {% if userData and userData.type == 'usuario' %}
         {{userData.usuario}}
         <a><button>Configurações da conta</button></a>
         <a href="/logout?destination=/"><button>Sair</button></a>
+        {% elif userData and userData.type == 'loja'%}
+            {{userData.nome_fantasia}}
+            <a><button>Configurações da loja</button></a>
+            <a href="/logout?destination=/"><button>Sair</button></a>
+            <a href="/loja/estoque"><button>Gerenciar estoque</button></a>
+            
+        
         {% else %}
         <a href="/user/Login/"><button>Login</button></a>
-        {% endif %}
         <a href="/cadastro"><button>Cadastrar</button></a>
+        {% endif %}
+
+        
     </body>
 </html>

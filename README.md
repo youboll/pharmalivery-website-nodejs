@@ -9,3 +9,7 @@ Não me julge
     * Fazer cadastro da loja (Feito) e adiocionar produtos
   
     * Concertar cadastro de loja (Feito)
+
+    *Trocar o banco de dados
+
+    *Criar gerenciador de estoque

@@ -5,7 +5,21 @@ const index = require('../index');
 const hash = require('hash.js');
 const db = require('../db.js');
 const JWT = require('jsonwebtoken');
+const userData = require('./user.js').userJWT
 router.use(express.urlencoded({ extended: false}));
+
+router.get('/loja/login',(req,res) => {
+    res.render('lojaLogin.html',{})
+})
+
+router.get('/loja/estoque', (req,res) => {
+    let user = new userData();
+    let userInfo = user.getJWtByCookie(req);
+    console.log("Dados usuario",userInfo)
+    return(res.render('estoque.html',{"userData": userInfo}))
+
+})
+
 router.post('/loja/signin', (req,res) => {
     if (req.body.cnpj && req.body.password) {
         const password = hash.sha512().update(req.body.password).digest('hex');
@@ -16,7 +30,10 @@ router.post('/loja/signin', (req,res) => {
             }
             if (results) {
                 if (results[0] == undefined) {res.statusCode = 401;res.send("Login incorreto");return(0);}
-                let token = JWT.sign(JSON.stringify(results[0]['type'] = "loja"),index.JWTPrivateKey);
+                results[0].type = "loja";
+                results[0].senha = undefined;
+
+                let token = JWT.sign(JSON.stringify(results[0]),index.JWTPrivateKey);
                 res.cookie('key',token);
                 if (req.body.destination) {res.redirect(req.body.destination)} else {
                     res.redirect('/')
@@ -27,9 +44,6 @@ router.post('/loja/signin', (req,res) => {
         // Exemplo de erro
         res.render('lojaLogin.html', {error:"Campos Vazios"})
     }
-})
-router.get('/loja/login',(req,res) => {
-    res.render('lojaLogin.html',{})
 })
 
 // Route de produtos no estilo CRUD ---- O mesmo link só muda o metodo
@@ -91,29 +105,3 @@ router.get('/loja/cadastro', (req,res) => {
 })
 module.exports = router;
 
-//Erro consertado: Não pode retornar valores no callback -- Passar para variavel intermediaria
-function checkToken (req,sensitive = false) {
-    let resu = null;
-    JWT.verify(req.body.jwtpass,index.JWTPrivateKey, (error,user) => {
-        if (error) {
-            resu = false;
-        } else {
-            resu = user;
-        }
-
-        if (sensitive == false) {
-            delete resu.senha;   
-        }
-    })
-    return(resu);
-}
-function check_req(wantedData,request) {
-    for (var x=0;x<wantedData.length;x++) {
-        //console.log('aieou')
-        if (request[wantedData[x]] == "") {
-           return(false)
-        }
-
-    }
-    //return(true)
-}
