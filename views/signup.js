@@ -33,7 +33,7 @@ router.post('/signup/', (req,res) => {
             break;
 
         case 'usuario':
-            let wantedUserData = ['username','cpf','email','email2','telefone','senha','senha2'];
+            let wantedUserData = ['username','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','senha','senha2'];
             let checkData = check_req(wantedUserData,req.body); 
             
             console.log("Empty: ",checkData)
@@ -44,15 +44,19 @@ router.post('/signup/', (req,res) => {
             // *TODO: Trocar todo res.send para res.render bobalhão
             if (req.body.email != req.body.email2) {res.statusCode = 401;res.render('cadastro.html',{error:"<strong>Email</strong> não correspondente"});return(0)}
             if (req.body.senha != req.body.senha2) {res.statuscode = 401;res.render('cadastro.html',{error:"<strong>Senha</strong> não correspondente"});return(0)}
-            if (8>req.body.senha.length || req.body.senha > 16) {res.statuscode = 401;res.render('cadastro.html',{error:"A <strong>Senha</strong> deve ser maior que 8 e menor de 16 caracteres"});return(0)}
+            if (8 > req.body.senha.length || req.body.senha.length > 16) {res.statuscode = 401;res.render('cadastro.html',{error:"A <strong>Senha</strong> deve ser maior que 8 e menor de 16 caracteres"});return(0)}
             const username = req.body.username; 
             const password = hash.sha512().update(req.body.senha).digest('hex');
             const email = req.body.email;
             const cpf = req.body.cpf;  
             const phone_num = req.body.telefone; 
+            const logradouro = req.body.logradouro;
+            const numero = req.body.numero;
+            const cidade = req.body.cidade;
+            const bairro = req.body.bairro;
+            const estado = req.body.estado;
 
-
-            let query = "INSERT INTO `users` (`cpf`, `email`, `telefone`, `usuario`, `senha`) VALUES ('"+cpf+"', '"+email+"', '"+phone_num+"', '"+username+"', '"+password+"');";
+            let query = "INSERT INTO `cliente` (`Cpf`, `Logradouro`, `Nome`, `Email` , `cidade`, `bairro`, `estado`, `celular`, `senha`) VALUES ('"+cpf+"', '"+logradouro+"', '"+username+"', '"+email+"',  '"+cidade+"', '"+bairro+"', '"+estado+"', '"+phone_num+"', '"+password+"');";
             let signupQuery = db.query(query, (err) => {
                 if (err) {
                     if (err.code == "ER_DUP_ENTRY") {res.statusCode = 500;res.render('cadastro.html',{error:"Usuario já cadastrado"});return(0)};
