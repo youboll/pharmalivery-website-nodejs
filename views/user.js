@@ -15,7 +15,7 @@ router.post('/user/signin/', (req,res) => {
     if (username && password && destination) {
         const password = hash.sha512().update(req.body.password).digest('hex');
         
-        let sql = "SELECT * FROM `users` WHERE `cpf` = '"+username+"' AND `senha` = '"+password+"'"; 
+        let sql = "SELECT * FROM `cliente` WHERE `Cpf` = '"+username+"' AND `senha` = '"+password+"'"; 
         let query = db.query(sql, (err,results) => {
             if (err) {
                 throw err;

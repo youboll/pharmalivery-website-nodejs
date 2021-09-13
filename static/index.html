@@ -6,7 +6,7 @@
     <body>
         Oi bem-vindo
         {% if userData and userData.type == 'usuario' %}
-        {{userData.usuario}}
+        {{userData.Nome}}
         <a><button>Configurações da conta</button></a>
         <a href="/logout?destination=/"><button>Sair</button></a>
         {% elif userData and userData.type == 'loja'%}
