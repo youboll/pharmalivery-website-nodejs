@@ -5,13 +5,14 @@ const index = require('../index');
 const hash = require('hash.js');
 const db = require('../db.js');
 const JWT = require('jsonwebtoken');
-const userData = require('./user.js').userJWT
+const userData = require('./user.js').userJWT;
+const check_req = require('./signup.js').check_req;
 router.use(express.urlencoded({ extended: false}));
 
 router.get('/loja/login',(req,res) => {
     res.render('lojaLogin.html',{})
 })
-
+//Adicionar lista do produtos
 router.get('/loja/estoque', (req,res) => {
     let user = new userData();
     let userInfo = user.getJWtByCookie(req);
@@ -20,6 +21,10 @@ router.get('/loja/estoque', (req,res) => {
 
 })
 
+router.get('/loja/addproduto', (req,res) => {
+    res.render('addProduto.html', {});
+})
+// Rotas POST
 router.post('/loja/signin', (req,res) => {
     if (req.body.cnpj && req.body.password) {
         const password = hash.sha512().update(req.body.password).digest('hex');
@@ -48,18 +53,31 @@ router.post('/loja/signin', (req,res) => {
 
 // Route de produtos no estilo CRUD ---- O mesmo link só muda o metodo
 router.post('/loja/produto', (req,res) => {
-    let wanted_info = ['nome','desc','lab','JWTKey','preco'];
-    if (check_req(wanted_info) == false) {
-        res.statusCode = 404;res.send("Dados vazios");return(0);
+    let wanted_info = ["nome","desc","lab","valor","qtd_unit","qtd_est","desc","tipo"];
+    let check_info = check_req(wanted_info,req);
+    console.log(check_info)
+    if (check_info == false) {
+        res.render('addProduto.html', {erro:"Dados vazios"});return(0);
     }
-    let userAuth =checkToken(req);
-    if(userAuth == false) {res.statusCode = 401;res.send("Nao autorizada");return(0);}
-    let sql = "INSERT INTO `produtos` (`nome`, `desc`, `lab`, `loja_id`, `preco`) VALUES ('"+req.body.nome+"', '"+req.body.desc+"', '"+req.body.lab+"', '"+userAuth.id+"', '"+req.body.preco+"');";
+    
+    //Check JWT
+    let user = new userData();
+    let userAuth = user.getJWtByCookie(req);
+    console.log(req.body)
+    if(userAuth == false || userAuth.type != "loja") {res.statusCode = 401;res.send("Nao autorizada");return(0);}
+    const nome = req.body.nome;
+    const desc = req.body.desc;
+    const lab = req.body.lab;
+    const valor = parseFloat(req.body.valor);
+    const qtd_unit = parseInt(req.body.qtd_unit);
+    const qtd_est = parseInt(req.body.qtd_est);
+    const tipo = req.body.tipo;
+    let sql = "INSERT INTO `pharma`.`remedios` (`valor`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES ('"+valor+"', '"+nome+"', '"+lab+"', '"+tipo+"', '"+qtd_unit+"', '"+qtd_est+"', '"+desc+"');";
     db.query(sql, (error,result) => {
         if (error) {
-            res.statusCode = 500;res.send("Erro desconhecido");return(0);
+            res.render('addProduto.html',{erro:"Erro desconhecido"});return(0);
         } else {
-            res.statusCode = 500; res.send("Ok");return(0);
+            res.redirect('/loja/estoque');
         }
     })
 })
