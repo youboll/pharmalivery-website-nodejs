@@ -78,16 +78,17 @@ router.get('/cadastro', (req,res) => {
     res.render('cadastro.html', {})
 })
 
-module.exports = router;
 
 //Verifica request
 function check_req(wantedData,request) {
     for (var x=0;x<wantedData.length;x++) {
-        //console.log('aieou')
-        if (request[wantedData[x]] == "") {
+        if (request.body[wantedData[x]] == "") {
            return(false)
         }
 
     }
     //return(true)
 }
+
+module.exports = router;
+module.exports.check_req = check_req;
