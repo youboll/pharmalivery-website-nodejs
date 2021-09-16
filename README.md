@@ -10,6 +10,7 @@ Não me julge
     * Fazer cadastro da loja (Feito) e adicionar produtos
   
     * Concertar cadastro de lo
+    
     *Trocar o banco de dados
 
     *Criar gerenciador de estoque
@@ -17,9 +18,3 @@ Não me julge
 ---Erros/Conflitos---
     *Não usando a tabela login, fazendo login pela tabela cliente(**Motivo**: *Já possui os mesmos campos*)
     *Adicionada table Loja
-
-    
-    *Trocar o banco de dado
-
-    *Criar gerenciador de estoque
-
