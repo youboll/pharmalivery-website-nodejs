@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14-Set-2021 às 00:43
+-- Tempo de geração: 20-Set-2021 às 15:52
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 8.0.0
 
@@ -138,14 +138,23 @@ CREATE TABLE `receita` (
 --
 
 CREATE TABLE `remedios` (
-  `cod_remedio` char(10) NOT NULL,
-  `valor` char(10) DEFAULT NULL,
-  `nome` char(10) DEFAULT NULL,
+  `farmacia` varchar(25) NOT NULL,
+  `cod_remedio` int(10) NOT NULL,
+  `valor` float DEFAULT NULL,
+  `nome` varchar(30) DEFAULT NULL,
   `laboratorio` char(10) DEFAULT NULL,
   `tipo` char(10) DEFAULT NULL,
   `qtdade_unidade` char(10) DEFAULT NULL,
-  `qtdadeEstoque` char(10) DEFAULT NULL
+  `qtdadeEstoque` char(10) DEFAULT NULL,
+  `desc` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `remedios`
+--
+
+INSERT INTO `remedios` (`farmacia`, `cod_remedio`, `valor`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES
+('00.000.000/0000-00', 10, 0, 'pedro', 'efef', 'efef', 'ef', 'ef', 'teste');
 
 -- --------------------------------------------------------
 
@@ -176,6 +185,12 @@ ALTER TABLE `estoque`
   ADD PRIMARY KEY (`cod_produto`);
 
 --
+-- Índices para tabela `loja`
+--
+ALTER TABLE `loja`
+  ADD PRIMARY KEY (`cnpj`);
+
+--
 -- Índices para tabela `pedido`
 --
 ALTER TABLE `pedido`
@@ -204,6 +219,16 @@ ALTER TABLE `remedios`
 --
 ALTER TABLE `remedios_pedido`
   ADD PRIMARY KEY (`codproduto_estoque`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `remedios`
+--
+ALTER TABLE `remedios`
+  MODIFY `cod_remedio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
