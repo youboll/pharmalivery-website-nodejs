@@ -60,9 +60,13 @@ class userData {
         } else {
             return(undefined)
         }
-        let userData = JWT.verify(cookies.key,require('../index.js').JWTPrivateKey);
-        return(userData)
-        
+        try {
+            let userData = JWT.verify(cookies.key,require('../index.js').JWTPrivateKey);
+            return(userData)
+        } catch (err) {
+            return(false)
+        }
+         
 
     }
 

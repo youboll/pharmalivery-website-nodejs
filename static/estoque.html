@@ -3,7 +3,11 @@
         <title>Pharmalivery</title>
     </head>
     <body>
+        <h2>{{msg}}</h2><br>
         {{userData.nome_fantasia}}
-        <a href="/loja/addproduto"><button>Adicionar produto</button></a>
+        <a href="/loja/addproduto"><button>Adicionar produto</button></a><br>
+        {% for produto in products%}
+            <a href="/loja/produto/update?id_produto={{produto.cod_remedio}}"><button>Modificar</button></a>Nome: {{produto.nome}} Estoque: {{produto.qtdadeEstoque}} Descrição: {{produto.desc}}  <a href="/loja/produto/delete?id_produto={{produto.cod_remedio}}"><button>Excluir</button></a><br>
+        {%endfor%}
     </body>
 </html>

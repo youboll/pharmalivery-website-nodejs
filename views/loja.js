@@ -12,18 +12,45 @@ router.use(express.urlencoded({ extended: false}));
 router.get('/loja/login',(req,res) => {
     res.render('lojaLogin.html',{})
 })
-//Adicionar lista do produtos
+
 router.get('/loja/estoque', (req,res) => {
     let user = new userData();
     let userInfo = user.getJWtByCookie(req);
-    console.log("Dados usuario",userInfo)
-    return(res.render('estoque.html',{"userData": userInfo}))
+
+    let sql = "SELECT * FROM `remedios` WHERE farmacia = '"+userInfo.cnpj+"'";
+    db.query(sql, (error,results) => {
+        if (error) {throw error;}
+
+        console.log("Dados usuario",userInfo)
+        return(res.render('estoque.html',{"userData": userInfo,"products":results,"msg":req.query.msg}))
+    })
+    
 
 })
 
 router.get('/loja/addproduto', (req,res) => {
     res.render('addProduto.html', {});
 })
+
+//Terminar Update
+router.get('/loja/produto/update',(req,res) => {
+    if (req.query.id_produto == undefined) {res.redirect('/loja/estoque');return(0);}
+    
+    let user = new userData();
+    let userInfo = user.getJWtByCookie(req);
+    if (userInfo == false) {res.redirect('/');return(0);}
+    let sql = "SELECT * FROM `remedios` WHERE farmacia = '"+userInfo.cnpj+"' AND cod_remedio = "+req.query.id_produto+"";
+    db.query(sql, (error,results) => {
+        if (error) {throw error;}
+        if (results[0] == undefined) {res.redirect('/loja/estoque?msg=Produto inesistente');return(0);}
+        res.render('atualizar.html',{produto:results[0],msg:req.query.msg})
+    })
+})
+
+
+
+
+
 // Rotas POST
 router.post('/loja/signin', (req,res) => {
     if (req.body.cnpj && req.body.password) {
@@ -51,7 +78,9 @@ router.post('/loja/signin', (req,res) => {
     }
 })
 
-// Route de produtos no estilo CRUD ---- O mesmo link só muda o metodo
+// CRUD do remedio
+
+//Cadastro
 router.post('/loja/produto', (req,res) => {
     let wanted_info = ["nome","desc","lab","valor","qtd_unit","qtd_est","desc","tipo"];
     let check_info = check_req(wanted_info,req);
@@ -63,8 +92,9 @@ router.post('/loja/produto', (req,res) => {
     //Check JWT
     let user = new userData();
     let userAuth = user.getJWtByCookie(req);
-    console.log(req.body)
+    console.log("Dados JWT "+userAuth)
     if(userAuth == false || userAuth.type != "loja") {res.statusCode = 401;res.send("Nao autorizada");return(0);}
+
     const nome = req.body.nome;
     const desc = req.body.desc;
     const lab = req.body.lab;
@@ -72,52 +102,69 @@ router.post('/loja/produto', (req,res) => {
     const qtd_unit = parseInt(req.body.qtd_unit);
     const qtd_est = parseInt(req.body.qtd_est);
     const tipo = req.body.tipo;
-    let sql = "INSERT INTO `pharma`.`remedios` (`valor`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES ('"+valor+"', '"+nome+"', '"+lab+"', '"+tipo+"', '"+qtd_unit+"', '"+qtd_est+"', '"+desc+"');";
+    let sql = "INSERT INTO `pharma`.`remedios` (`farmacia`,`valor`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES ('"+userAuth.cnpj+"','"+valor+"', '"+nome+"', '"+lab+"', '"+tipo+"', '"+qtd_unit+"', '"+qtd_est+"', '"+desc+"');";
     db.query(sql, (error,result) => {
         if (error) {
-            res.render('addProduto.html',{erro:"Erro desconhecido"});return(0);
+            throw error;
+            //res.render('addProduto.html',{erro:"Erro desconhecido"});return(0);
         } else {
             res.redirect('/loja/estoque');
         }
     })
 })
-router.get('/loja/produto', (req,res) => {
-    if (check_req(['loja_id']) == false) {res.statusCode;res.send('Dados Vazios');return(0);}
-    let sql = "SELECT * FROM `produtos` WHERE `loja_id`="+req.body.loja_id+"";
-    db.query(sql, (error,results) => {
-        if (error) {
-            throw error;
-        }
-        if (results) {
-            res.json(results)    
-        }
-    })
-})
-router.delete('/loja/produto', (req,res) => {
-    let userAuth =checkToken(req);
-    if(userAuth == false) {res.statusCode = 401;res.send("Nao autorizada");return(0);}
-    if(check_req(['id_produto'])) {res.statusCode = 401;res.send("Dados vazios");return(0);}
-    let sql = "SELECT * FROM `produtos` WHERE `produto_id`='"+req.body.id_produto+"' AND `loja_id` = '"+userAuth.id+"';"
+
+//Delete
+router.get('/loja/produto/delete', (req,res) => {
+    let user = new userData();
+    let userAuth = user.getJWtByCookie(req);
+    let id_produto = req.query.id_produto;
+    if(userAuth == false || userAuth.type != "loja") {res.statusCode = 401;res.send("Credenciais invalidas");return(0);}
+
+    if (id_produto == undefined) {res.send('campos vazios');return(0);}
+
+    let sql = "DELETE FROM `remedios` WHERE `remedios`.`cod_remedio` = "+id_produto+" AND farmacia = '"+userAuth.cnpj+"'";
     db.query(sql,(error,results) => {
         if (error) {
             throw error;
         }
-        if (results[0] == undefined) {res.statusCode = 401;res.send('Nao a');return(false)} 
-        else {
-
-            let sql2 = "DELETE FROM `produtos` WHERE `produtos`.`produto_id` = "+req.body.id_produto+"";
-            db.query(sql2, (error,results) => {
-                    if (error) {
-                        throw error;
-                    } else {
-                        res.send("Ok");return(0);
-                    }
-                })
-        }
+    
+        res.redirect('/loja/estoque?msg=Produto Deletado com sucesso');
+        
+        
     })
      
         
 })
+
+router.post('/loja/produto/update', (req,res) => {
+    if (req.body.id_produto == undefined) {res.send('/loja/estoue');}
+    
+
+    let user = new userData();
+    let userAuth = user.getJWtByCookie(req);
+    if (userAuth == false) {res.redirect('/');return(0)}
+    
+    let wanted_info = ["nome","desc","lab","valor","qtd_unit","qtd_est","desc","tipo"];
+    let check_info = check_req(wanted_info,req);
+    if (check_info == false) {res.redirect('/loja/produto/update?msg=Dados Vazios&id_produto='+req.body.id_produto+'');return(0);}
+
+    const id_produto = req.body.id_produto;
+    const farmacia = userAuth.cnpj;
+    const valor = req.body.valor;
+    const nome = req.body.nome;
+    const lab = req.body.lab;
+    const tipo = req.body.tipo;
+    const qtdade_unidade = req.body.qtd_unit;
+    const qtdadeEstoque = req.body.qtd_est;
+
+    let sql  = "UPDATE `remedios` SET `farmacia` = '"+farmacia+"', `valor` = '"+valor+"', `nome` = '"+nome+"', `laboratorio` = '"+lab+"', `tipo` = '"+tipo+"', `qtdade_unidade` = '"+qtdade_unidade+"', `qtdadeEstoque` = '"+qtdadeEstoque+"' WHERE `remedios`.`cod_remedio` = "+id_produto+" ";
+    db.query(sql,(error,results) => {
+        if (error) {throw error;}
+        res.redirect('/loja/estoque?msg=Alterado com sucesso')
+    })
+})
+
+//Signup
 router.get('/loja/cadastro', (req,res) => {
     res.render('lojaCadastro.html')
 })

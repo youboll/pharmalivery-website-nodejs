@@ -8,12 +8,9 @@ Não me julge
     * Refazer sistema de cadastro do usuario e linkar com formulario (FEITO)
   
     * Fazer cadastro da loja (Feito) e adicionar produtos
-  
-    * Concertar cadastro de lo
-    
-    *Trocar o banco de dados
 
     *Criar gerenciador de estoque
+
     
 ---Erros/Conflitos---
     *Não usando a tabela login, fazendo login pela tabela cliente(**Motivo**: *Já possui os mesmos campos*)
