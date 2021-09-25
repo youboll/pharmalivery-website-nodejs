@@ -4,14 +4,19 @@
     </head>
     <body>
         {{erro}}
-        <form action="/loja/produto" method="POST">
-            <input type="text" name="nome" placeholder="Nome">
-            <input type="text" name="lab" placeholder="Laboratorio">
-            <input type="text" name="valor" placeholder="Preco">
-            <input type="text" name="desc" placeholder="Descrição">
-            <input type="text" name="qtd_unit" placeholder="Quantidade por embalagem">
-            <input type="text" name="qtd_est" placeholder="Quantidalde no estoque">
-            <input type="text" name="tipo" placeholder="Tipo">
+        <form action="/loja/produto" method="POST" encType="multipart/form-data">
+            <input type="text" name="nome" placeholder="Nome"><br>
+            <input type="text" name="lab" placeholder="Laboratorio"><br>
+            <input type="text" name="valor" placeholder="Preco"><br>
+            <input type="text" name="desc" placeholder="Descrição"><br>
+            <input type="text" name="qtd_unit" placeholder="Quantidade por embalagem"><br>
+            <input type="text" name="qtd_est" placeholder="Quantidalde no estoque"><br>
+            <input type="text" name="tipo" placeholder="Tipo"><br>
+            Foto <input type="file" name="file1"/>
+            Foto2 <input type="file" name="file2"/>
+            Foto3 <input type="file" name="file3"/>
+            Foto4 <input type="file" name="file4"/>
+
             <button type="submit">Adicionar</button>
         </form>
     </body>
