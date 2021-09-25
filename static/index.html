@@ -2,7 +2,12 @@
     <head>
         <!-- Pegar Icon de remédio ou fazer-->
         <title>Index-Pharmalivery</title>
+        <link rel="stylesheet" type="text/css" href="http://localhost/pharmalivery/index.css">
     </head>
+    <style>
+       
+    </style>
+    
     <body>
         Oi bem-vindo
         {% if userData and userData.type == 'usuario' %}
@@ -17,10 +22,19 @@
             
         
         {% else %}
-        <a href="/user/Login/"><button>Login</button></a>
-        <a href="/cadastro"><button>Cadastrar</button></a>
+        
+        <a href="/user/Login/" ><button class="btn-login">Login</button></a>
+        <a href="/cadastro"><button class="btn-login">Cadastrar</button></a>
+        
         {% endif %}
-
+        <!-- Produtos-->
+        <br>
+        {% for produto in produtos%}
+        <a href="/{{produto.cod_remedio}}">{{produto.nome}}</a>
+        {% endfor %}
         
     </body>
+    
 </html>
+
+

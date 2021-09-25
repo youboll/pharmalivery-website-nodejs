@@ -1,5 +1,6 @@
 const Router = require('express').Router();
-const JWT = require('jsonwebtoken')
+const JWT = require('jsonwebtoken');
+const db = require('../db.js')
 Router.get('/', (req,res) => {
     let userData = undefined;
     try {
@@ -7,7 +8,12 @@ Router.get('/', (req,res) => {
     } catch(e) {
         userData = false;
     }
-    res.render('index.html',{"userData": userData});
+    let sql = "SELECT * FROM `remedios`";
+    db.query(sql,(error,results) => {
+        if (error) {throw error;}
+        res.render('index.html',{"userData": userData,"produtos":results});
+    })
+    
 })
 //Instead of downloading a package
 function breakCookie(cookie) {

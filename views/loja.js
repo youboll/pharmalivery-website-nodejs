@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const express = require('express')
+const path = require('path');
 //Faz a importação 
 const index = require('../index');
 const hash = require('hash.js');
@@ -7,6 +8,10 @@ const db = require('../db.js');
 const JWT = require('jsonwebtoken');
 const userData = require('./user.js').userJWT;
 const check_req = require('./signup.js').check_req;
+const fileupload = require('express-fileupload');
+const fs = require('fs')
+router.use(fileupload())
+
 router.use(express.urlencoded({ extended: false}));
 
 router.get('/loja/login',(req,res) => {
@@ -61,7 +66,7 @@ router.post('/loja/signin', (req,res) => {
                 throw error;
             }
             if (results) {
-                if (results[0] == undefined) {res.statusCode = 401;res.send("Login incorreto");return(0);}
+                if (results[0] == undefined) {res.statusCode = 401;res.render('lojaLogin.html', {error:"Credenciais invalidas"});return(0);}
                 results[0].type = "loja";
                 results[0].senha = undefined;
 
@@ -84,6 +89,9 @@ router.post('/loja/signin', (req,res) => {
 router.post('/loja/produto', (req,res) => {
     let wanted_info = ["nome","desc","lab","valor","qtd_unit","qtd_est","desc","tipo"];
     let check_info = check_req(wanted_info,req);
+    console.log("Arquivos",req.files)
+    //Lidando com fotos
+    
     console.log(check_info)
     if (check_info == false) {
         res.render('addProduto.html', {erro:"Dados vazios"});return(0);
@@ -111,6 +119,37 @@ router.post('/loja/produto', (req,res) => {
             res.redirect('/loja/estoque');
         }
     })
+
+    if (req.files) {
+        //C:\xampp\htdocs\pharmalivery
+        let dir = "/xampp/htdocs/pharmalivery/";
+        //dir = path.normalize(dir)
+        let wanted_files = ['file1','file2','file3','file4'];
+        for (var x=0;x<wanted_files.length;x++) {
+            if (req.files[wanted_files[x]] != undefined) {
+                let file = req.files[wanted_files[x]];
+                let photoName = parseInt(Math.random() * 1000 + 1).toString()+file.name;
+                file.mv(dir+photoName, (err) => {
+                    if (err) {
+                        throw(err);
+                    }
+                })
+                let sql = "SELECT * FROM remedios WHERE nome = '"+nome+"'";
+                db.query(sql,(error,results) => {
+                    if (error) {throw error;}
+                    let url = "http://localhost/"+(dir+photoName).substring(13)
+                    let query = "INSERT INTO `foto_produto` (`id_produto`, `foto`) VALUES ('"+results[0].cod_remedio+"', '"+url+"');";
+                    db.query(query, (error,results) => {
+                        if (error) {throw error;}
+                    })
+                })
+            }
+
+        }
+        
+
+    }
+
 })
 
 //Delete

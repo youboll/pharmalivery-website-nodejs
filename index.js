@@ -2,8 +2,10 @@ const db = require('./db.js');
 const express = require('express');
 const controller = require('./controller.js');
 const cors = require('cors');
-const app = express();
 const nunjucks = require('nunjucks');
+
+const app = express();
+
 app.use(cors());
 
 app.use(express.json());
