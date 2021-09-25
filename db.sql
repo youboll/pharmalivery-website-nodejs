@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20-Set-2021 às 15:52
+-- Tempo de geração: 25-Set-2021 às 20:34
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 8.0.0
 
@@ -58,6 +58,26 @@ CREATE TABLE `estoque` (
   `nome_produto` char(10) DEFAULT NULL,
   `validade` char(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `foto_produto`
+--
+
+CREATE TABLE `foto_produto` (
+  `cod` int(11) NOT NULL,
+  `id_produto` int(11) NOT NULL,
+  `foto` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `foto_produto`
+--
+
+INSERT INTO `foto_produto` (`cod`, `id_produto`, `foto`) VALUES
+(11, 37, 'http://localhost//pharmalivery/252Variação Linguística.pdf'),
+(12, 47, 'http://localhost//pharmalivery/411WhatsApp Image 2021-09-25 at 10.41.28.jpeg');
 
 -- --------------------------------------------------------
 
@@ -154,7 +174,8 @@ CREATE TABLE `remedios` (
 --
 
 INSERT INTO `remedios` (`farmacia`, `cod_remedio`, `valor`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES
-('00.000.000/0000-00', 10, 0, 'pedro', 'efef', 'efef', 'ef', 'ef', 'teste');
+('00.000.000/0000-00', 10, 0, 'pedro', 'efef', 'efef', 'ef', 'ef', 'teste'),
+('00.000.000/0000-00', 47, 0, 'bruh', 'br', 'er', 'NaN', 'NaN', 'bre');
 
 -- --------------------------------------------------------
 
@@ -183,6 +204,12 @@ ALTER TABLE `cliente`
 --
 ALTER TABLE `estoque`
   ADD PRIMARY KEY (`cod_produto`);
+
+--
+-- Índices para tabela `foto_produto`
+--
+ALTER TABLE `foto_produto`
+  ADD PRIMARY KEY (`cod`);
 
 --
 -- Índices para tabela `loja`
@@ -225,10 +252,16 @@ ALTER TABLE `remedios_pedido`
 --
 
 --
+-- AUTO_INCREMENT de tabela `foto_produto`
+--
+ALTER TABLE `foto_produto`
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT de tabela `remedios`
 --
 ALTER TABLE `remedios`
-  MODIFY `cod_remedio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `cod_remedio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
