@@ -13,16 +13,14 @@
         {% if userData and userData.type == 'usuario' %}
         {{userData.Nome}}
         <a><button>Configurações da conta</button></a>
+        <a href="/carrinho"><button>Carrinho de compras</button></a>
         <a href="/logout?destination=/"><button>Sair</button></a>
         {% elif userData and userData.type == 'loja'%}
             {{userData.nome_fantasia}}
             <a><button>Configurações da loja</button></a>
             <a href="/logout?destination=/"><button>Sair</button></a>
             <a href="/loja/estoque"><button>Gerenciar estoque</button></a>
-            
-        
         {% else %}
-        
         <a href="/user/Login/" ><button class="btn-login">Login</button></a>
         <a href="/cadastro"><button class="btn-login">Cadastrar</button></a>
         
@@ -30,7 +28,7 @@
         <!-- Produtos-->
         <br>
         {% for produto in produtos%}
-        <a href="/{{produto.cod_remedio}}">{{produto.nome}}</a>
+        <a href="/produto/{{produto.cod_remedio}}">{{produto.nome}}</a>
         {% endfor %}
         
     </body>
