@@ -1,0 +1,33 @@
+{
+    "sqltools.connections": [
+        {
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": true
+            },
+            "previewLimit": 50,
+            "server": "shitfinder.database.windows.net",
+            "port": 1433,
+            "driver": "MSSQL",
+            "name": "shitfinder",
+            "database": "shit",
+            "username": "pedroJesus",
+            "password": "ws-908rl",
+            "connectionTimeout": 30
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "shitfinder.mysql.database.azure.com",
+            "port": 3306,
+            "askForPassword": true,
+            "driver": "MySQL",
+            "name": "shitFinderMysql",
+            "database": "quickstartdb",
+            "username": "pedroJesus"
+        }
+    ]
+}

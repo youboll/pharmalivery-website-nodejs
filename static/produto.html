@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Pharmalivery</title>
+    </head>
+    <body>
+        Nome:{{produto.nome}}<br>
+        Codigo: {{produto.cod_remedio}}<br>
+        Laboratório: {{produto.laboratorio}}<br>
+        Tipo: {{produto.tipo}}<br>
+        Quantidade por embalagem: {{produto.qtdade_unidade}}<br> 
+        Descrição: {{produto.desc}}          
+        <a><button>Comprar</button></a> <br>
+        <form method="GET" action="/addCarrinho/{{produto.cod_remedio}}">
+            Quantidade: <input type="number" name="quantidade" value="1">
+            <a href="/addCarrinho/{{produto.cod_remedio}}"><button>Adicionar ao carrinho</button></a><br>
+        </form>
+        {% for foto in fotos%}
+            <img width="500" height="300" src="{{foto.foto}}">
+        {% endfor %}
+    </body>
+</html>

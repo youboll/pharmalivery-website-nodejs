@@ -1,0 +1,20 @@
+<meta charset="UTF-8">
+<html>
+    <head>
+        <title>Pharmalivery</title>
+    </head>
+    <body>
+        {{msg}}<br>
+        <form action="/loja/produto/update" method="POST">
+            Nome: <input type="text" name="nome" placeholder="Digite o nome do remedio" value="{{produto.nome}}"><br>
+            Labolatorio: <input type="text" name="lab" placeholder="Digite o laboratorio do remedio" value="{{produto.laboratorio}}"><br>
+            Tipo: <input type="text" name="tipo" placeholder="Digite o tipo do remedio" value="{{produto.tipo}}"><br>
+            Preço: <input type="text" name="valor" placeholder="Digite o preço do remedio" value="{{produto.valor}}">
+            Quantidade por unidade: <input type="text" name="qtd_unit" placeholder="Digite a quantidade por embalagem" value="{{produto.qtdade_unidade}}"><br>
+            Quantidade de estoque <input type="text" name="qtd_est" placeholder="Digite a quantidade em estoque"  value="{{produto.qtdadeEstoque}}"><br>
+            Descrição <input type="text" name="desc" placeholder="Digite a descrição"  value="{{produto.desc}}"><br>
+            <input type="hidden" name="id_produto" value="{{produto.cod_remedio}}">
+            <button type="submit">Atualizar</button>
+        </form>
+    </body>
+</html>

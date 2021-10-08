@@ -1,0 +1,10 @@
+<html>
+    <head>
+        <title>Pharmalivery</title>
+    </head>
+    <body>
+        {% for produto in cartData.produtos%}
+            {{produto.nome}} {{produto.quantidade}} <br>
+        {% endfor %}
+    </body>
+</html>
