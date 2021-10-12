@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Pharmalivery</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+        <script>
+            $(document).ready(function(){	
+		    $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $("#telefone, #celular").mask("(00) 0000-00000");
+	        });
+        </script>
+    </head>
+    <body>
+        <form action="/carrinho/entrega" method="POST">
+            <input type="text" name="rua" placeholder="Rua"><br>
+            <input type="text" name="bairro" placeholder="Bairro"> <input type="number" placeholder="Nº"><br>
+            <input type="text" name="cidade" placeholder="Cidade"><br>
+            <input type="text" name="cep" id="cep" placeholder="CEP">
+
+        </form>
+    </body>
+</html>

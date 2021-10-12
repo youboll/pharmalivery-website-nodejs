@@ -7,5 +7,7 @@ router.use(require('./views/loja.js'));
 router.use(require('./views/index.js'));
 router.use(require('./views/logout.js'));
 router.use(require('./views/produtos.js'));
+router.use(require('./views/carrinho.js'));
 router.use(require('./views/compra.js'));
+
 module.exports = router;

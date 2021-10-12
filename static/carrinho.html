@@ -3,8 +3,13 @@
         <title>Pharmalivery</title>
     </head>
     <body>
+        {{alert}}<br>
+        {{error}}
         {% for produto in cartData.produtos%}
-            {{produto.nome}} {{produto.quantidade}} <br>
+            Nome: {{produto.nome}} Quantidade: {{produto.quantidade}} Laboratório: {{produto.laboratorio}} Descrição: {{produto.desc}}
+            <a href="/removeCarrinho/{{produto.cod_remedio}}"><button>Remover</button></a>
+            <br>
         {% endfor %}
+        <a href="/compra/confirmaCompra"><button>Continuar compra</button></a>
     </body>
 </html>

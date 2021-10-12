@@ -16,7 +16,7 @@ nunjucks.configure('static', {
     autoescape: true,
     express: app
 });
-
+app.use(express.static('static'))
 
 require('dotenv').config();
 //Busca pelo arquivo .env e senhas sensiveis

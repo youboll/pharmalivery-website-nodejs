@@ -110,7 +110,8 @@ router.post('/loja/produto', (req,res) => {
     const qtd_unit = parseInt(req.body.qtd_unit);
     const qtd_est = parseInt(req.body.qtd_est);
     const tipo = req.body.tipo;
-    let sql = "INSERT INTO `pharma`.`remedios` (`farmacia`,`valor`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES ('"+userAuth.cnpj+"','"+valor+"', '"+nome+"', '"+lab+"', '"+tipo+"', '"+qtd_unit+"', '"+qtd_est+"', '"+desc+"');";
+    const frete = parseInt(req.body.frete);
+    let sql = "INSERT INTO `pharma`.`remedios` (`farmacia`,`valor`,`valorFrete`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES ('"+userAuth.cnpj+"','"+nome+"', '"+valor+"','"+frete+"', '"+lab+"', '"+tipo+"', '"+qtd_unit+"', '"+qtd_est+"', '"+desc+"');";
     db.query(sql, (error,result) => {
         if (error) {
             throw error;
@@ -195,8 +196,8 @@ router.post('/loja/produto/update', (req,res) => {
     const tipo = req.body.tipo;
     const qtdade_unidade = req.body.qtd_unit;
     const qtdadeEstoque = req.body.qtd_est;
-
-    let sql  = "UPDATE `remedios` SET `farmacia` = '"+farmacia+"', `valor` = '"+valor+"', `nome` = '"+nome+"', `laboratorio` = '"+lab+"', `tipo` = '"+tipo+"', `qtdade_unidade` = '"+qtdade_unidade+"', `qtdadeEstoque` = '"+qtdadeEstoque+"' WHERE `remedios`.`cod_remedio` = "+id_produto+" ";
+    const frete = parseInt(req.body.frete)
+    let sql  = "UPDATE `remedios` SET `farmacia` = '"+farmacia+"', `valor` = '"+valor+"', `nome` = '"+nome+"', `laboratorio` = '"+lab+"', `tipo` = '"+tipo+"', `qtdade_unidade` = '"+qtdade_unidade+"', `qtdadeEstoque` = '"+qtdadeEstoque+"',`valorFrete` = '"+frete+"' WHERE `remedios`.`cod_remedio` = "+id_produto+" ";
     db.query(sql,(error,results) => {
         if (error) {throw error;}
         res.redirect('/loja/estoque?msg=Alterado com sucesso')
