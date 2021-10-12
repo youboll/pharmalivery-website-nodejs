@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25-Set-2021 às 20:34
+-- Tempo de geração: 12-Out-2021 às 19:18
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 8.0.0
 
@@ -120,8 +120,15 @@ INSERT INTO `loja` (`nome_fantasia`, `nota`, `cnpj`, `senha`, `insc_estadual`, `
 CREATE TABLE `pedido` (
   `cod_pedido` char(10) NOT NULL,
   `data_pedido` char(10) DEFAULT NULL,
-  `valor` char(10) DEFAULT NULL,
-  `Cpf` char(10) DEFAULT NULL
+  `cpf` varchar(14) NOT NULL,
+  `rua` varchar(50) NOT NULL,
+  `bairro` varchar(50) NOT NULL,
+  `cep` varchar(20) NOT NULL,
+  `cidade` varchar(15) NOT NULL,
+  `estado` varchar(30) NOT NULL,
+  `latitude` varchar(100) NOT NULL,
+  `longitudade` varchar(100) NOT NULL,
+  `valor` char(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -161,6 +168,7 @@ CREATE TABLE `remedios` (
   `farmacia` varchar(25) NOT NULL,
   `cod_remedio` int(10) NOT NULL,
   `valor` float DEFAULT NULL,
+  `valorFrete` int(11) NOT NULL,
   `nome` varchar(30) DEFAULT NULL,
   `laboratorio` char(10) DEFAULT NULL,
   `tipo` char(10) DEFAULT NULL,
@@ -173,9 +181,9 @@ CREATE TABLE `remedios` (
 -- Extraindo dados da tabela `remedios`
 --
 
-INSERT INTO `remedios` (`farmacia`, `cod_remedio`, `valor`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES
-('00.000.000/0000-00', 10, 0, 'pedro', 'efef', 'efef', 'ef', 'ef', 'teste'),
-('00.000.000/0000-00', 47, 0, 'bruh', 'br', 'er', 'NaN', 'NaN', 'bre');
+INSERT INTO `remedios` (`farmacia`, `cod_remedio`, `valor`, `valorFrete`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES
+('00.000.000/0000-00', 10, 12, 3, 'Hidroxido de pedro', 'efef', 'Veneno', '15', '20', 'teste'),
+('00.000.000/0000-00', 47, 0, 0, 'bruh', 'br', 'er', 'NaN', 'NaN', 'bre');
 
 -- --------------------------------------------------------
 
@@ -261,7 +269,7 @@ ALTER TABLE `foto_produto`
 -- AUTO_INCREMENT de tabela `remedios`
 --
 ALTER TABLE `remedios`
-  MODIFY `cod_remedio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `cod_remedio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
