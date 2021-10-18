@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>Pharmalivery</title>
+    </head>
+    <body>
+        {% for produto in produtos%}
+        <a href="/produto/{{produto.cod_remedio}}">
+            <div>
+            Nome:{{produto.nome}}<br>
+            Farmacia: {{produto.farmacia}}<br>
+            </div>
+        </a>
+        {% endfor %}
+        {%if produtos == undefined%} 
+            Nada encontrado :(
+        {% endif %}
+    </body>
+</html>

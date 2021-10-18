@@ -17,5 +17,12 @@ router.get('/produto/:cod_produto', (req,res) => {
         
     })
 })
-
+router.get('/pesquisa', (req,res) => {
+    if (req.query.searchQuery == undefined) {res.redirect('/');return(0);}
+    let sql = "SELECT * FROM `remedios` WHERE `nome` LIKE '%"+req.query.searchQuery+"%' ORDER BY `valor` DESC";
+    db.query(sql,(error,results) => {
+        if (error) {throw error}
+        res.render('pesquisa.html',{"produtos":results})
+    })
+})
 module.exports = router;

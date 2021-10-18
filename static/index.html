@@ -2,29 +2,61 @@
     <head>
         <!-- Pegar Icon de remédio ou fazer-->
         <title>Index-Pharmalivery</title>
-        <link rel="stylesheet" type="text/css" href="http://localhost/pharmalivery/index.css">
+        <link rel="stylesheet" type="text/css" href="/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
     </head>
-    <style>
-       
-    </style>
+    <script>
+        function menuToggle () {
+            const toggleMenu = document.querySelector('.menu');
+            toggleMenu.classList.toggle('active')
+        }
+    </script>
     
     <body>
-        Oi bem-vindo
-        {% if userData and userData.type == 'usuario' %}
-        {{userData.Nome}}
-        <a><button>Configurações da conta</button></a>
-        <a href="/carrinho"><button>Carrinho de compras</button></a>
-        <a href="/logout?destination=/"><button>Sair</button></a>
-        {% elif userData and userData.type == 'loja'%}
-            {{userData.nome_fantasia}}
-            <a><button>Configurações da loja</button></a>
-            <a href="/logout?destination=/"><button>Sair</button></a>
-            <a href="/loja/estoque"><button>Gerenciar estoque</button></a>
-        {% else %}
-        <a href="/user/Login/" ><button class="btn-login">Login</button></a>
-        <a href="/cadastro"><button class="btn-login">Cadastrar</button></a>
+        <div id="header">
+            <img src="/logo.png">
+            <div id="search-box">
+                <form action="/pesquisa" id="formPesquisa">
+                    <input type="text" name="searchQuery" placeholder="O que você está buscando?">
+                    <a id="searchIcon" onClick="document.getElementById('formPesquisa').submit()">
+                    <i class="fas fa-search" ></i>
+                    </a>
+                </form>
+            </div>
+            <div id="userData">
+                {% if userData and userData.type == 'usuario' %}
+                <div class="action">
+                    <div class="profile">
+                        <ion-icon name="contact"></ion-icon>
+                        <img src="/user.png" onclick="menuToggle()">
+                    </div>
+                    <div class="menu">
+                        <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
+                        <ul>
+                            <li><img src="user.png"><a href="/carrinho">Carrinho de compras</a></li>
+                            <li><img src="edit.png"><a href="#">Edit profile</a></li>
+                            <li><img src="envelope.png"><a href="#">Inbox</a></li>
+                            <li><img src="settings.png"><a href="#">Configurações da conta</a></li>
+                            <li><img src="question.png"><a href="#">Help</a></li>
+                            <li><img src="log-out.png"><a href="/logout?destination=/">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                
+                {% elif userData and userData.type == 'loja'%}
+                    {{userData.nome_fantasia}}
+                    <a><button>Configurações da loja</button></a>
+                    <a href="/logout?destination=/"><button>Sair</button></a>
+                    <a href="/loja/estoque"><button>Gerenciar estoque</button></a>
+                {% else %}
+                <a href="/user/Login/" ><button class="btn-login">Login</button></a>
+                <a href="/cadastro"><button class="btn-login">Cadastrar</button></a>
+            
         
         {% endif %}
+            </div>
+        </div>
         <!-- Produtos-->
         <br>
         {% for produto in produtos%}
