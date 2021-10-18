@@ -82,6 +82,7 @@ router.get('/cadastro', (req,res) => {
 //Verifica request
 function check_req(wantedData,request) {
     for (var x=0;x<wantedData.length;x++) {
+        if (request.body == undefined) { return(false)}
         if (request.body[wantedData[x]] == "") {
            return(false)
         }
