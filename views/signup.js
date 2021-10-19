@@ -8,7 +8,7 @@ router.use(express.urlencoded({ extended: false}));
 router.post('/signup/', (req,res) => {
     switch(req.body.type) {
         case 'loja':
-            let wantedData = ['nome_fantasia', 'cnpj', 'insc_estadual', 'email','email2', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'telefone', 'celular','senha','senha2'];
+            var wantedData = ['nome_fantasia', 'cnpj', 'insc_estadual', 'email','email2', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'telefone', 'celular','senha','senha2'];
             let senha = hash.sha512().update(req.body.senha).digest('hex');
             
             let check =  check_req(wantedData,req.body) 
@@ -33,8 +33,8 @@ router.post('/signup/', (req,res) => {
             break;
 
         case 'usuario':
-            let wantedUserData = ['username','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','senha','senha2'];
-            let checkData = check_req(wantedUserData,req.body); 
+            var wantedUserData = ['username','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','senha','senha2'];
+            var checkData = check_req(wantedUserData,req.body); 
             
             console.log("Empty: ",checkData)
 
@@ -45,16 +45,16 @@ router.post('/signup/', (req,res) => {
             if (req.body.email != req.body.email2) {res.statusCode = 401;res.render('cadastro.html',{error:"<strong>Email</strong> não correspondente"});return(0)}
             if (req.body.senha != req.body.senha2) {res.statuscode = 401;res.render('cadastro.html',{error:"<strong>Senha</strong> não correspondente"});return(0)}
             if (8 > req.body.senha.length || req.body.senha.length > 16) {res.statuscode = 401;res.render('cadastro.html',{error:"A <strong>Senha</strong> deve ser maior que 8 e menor de 16 caracteres"});return(0)}
-            const username = req.body.username; 
-            const password = hash.sha512().update(req.body.senha).digest('hex');
-            const email = req.body.email;
-            const cpf = req.body.cpf;  
-            const phone_num = req.body.telefone; 
-            const logradouro = req.body.logradouro;
-            const numero = req.body.numero;
-            const cidade = req.body.cidade;
-            const bairro = req.body.bairro;
-            const estado = req.body.estado;
+            var username = req.body.username; 
+            var password = hash.sha512().update(req.body.senha).digest('hex');
+            var email = req.body.email;
+            var cpf = req.body.cpf;  
+            var phone_num = req.body.telefone; 
+            var logradouro = req.body.logradouro;
+            var numero = req.body.numero;
+            var cidade = req.body.cidade;
+            var bairro = req.body.bairro;
+            var estado = req.body.estado;
 
             let query = "INSERT INTO `cliente` (`Cpf`, `Logradouro`, `Nome`, `Email` , `cidade`, `bairro`, `estado`, `celular`, `senha`) VALUES ('"+cpf+"', '"+logradouro+"', '"+username+"', '"+email+"',  '"+cidade+"', '"+bairro+"', '"+estado+"', '"+phone_num+"', '"+password+"');";
             let signupQuery = db.query(query, (err) => {
@@ -66,7 +66,31 @@ router.post('/signup/', (req,res) => {
             });
             
             break;
+        case 'entregador':
+            var wantedUserData = ['nome','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','cep','senha','senha2'];
+            var checkData = check_req(wantedUserData,req.body); 
+            if (checkData == false) {res.code = 401;res.render('cadastroEntregador.html',{error:"Dados Vazios"});return(0)}
+            if (req.body.email != req.body.email2) {res.statusCode = 401;res.render('cadastroEntregador.html',{error:"<strong>Email</strong> não correspondente"});return(0)}
+            if (req.body.senha != req.body.senha2) {res.statuscode = 401;res.render('cadastroEntregador.html',{error:"<strong>Senha</strong> não correspondente"});return(0)}
+            if (8 > req.body.senha.length || req.body.senha.length > 16) {res.statuscode = 401;res.render('cadastroEntregador.html',{error:"A <strong>Senha</strong> deve ser maior que 8 e menor de 16 caracteres"});return(0)}
+            var nome = req.body.nome; 
+            var senha = hash.sha512().update(req.body.senha).digest('hex');
+            var email = req.body.email;
+            var cpf = req.body.cpf;  
+            var telefone = req.body.telefone; 
+            var logradouro = req.body.logradouro;
+            var numero = req.body.numero;
+            var cidade = req.body.cidade;
+            var bairro = req.body.bairro;
+            var estado = req.body.estado;
+            var cep = req.body.cep;
+            let sqlQuery = "INSERT INTO `pharma`.`entregador` (`nome`, `cpf`, `senha`, `email`, `telefone`, `logradouro`, `numero`, `bairro`, `cidade`, `estado`, `cep`) VALUES ('"+nome+"', '"+cpf+"', '"+senha+"', '"+email+"', '"+telefone+"', '"+logradouro+"', '"+numero+"', '"+bairro+"', '"+cidade+"', '"+estado+"', '"+cep+"');";
+            db.query(sql,(error) => {
+                if (error) {throw error}
+                res.redirect('/');
+            });
 
+            break;
         default:
             res.statusCode = 401;
             res.send("tipo desconhecido");return(0);
@@ -77,7 +101,9 @@ router.post('/signup/', (req,res) => {
 router.get('/cadastro', (req,res) => {
     res.render('cadastro.html', {})
 })
-
+router.get('/cadastro/entregador',(req,res) => {
+    res.render('cadastroEntregador.html')
+})
 
 //Verifica request
 function check_req(wantedData,request) {

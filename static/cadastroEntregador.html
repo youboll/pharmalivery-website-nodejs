@@ -1,0 +1,75 @@
+<meta charset="UTF-8">
+<html>
+    <head>
+        <title>Pharmalivery</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+        <script>
+        
+            function formatar(mascara, documento){
+              var i = documento.value.length;
+              var saida = mascara.substring(0,1);
+              var texto = mascara.substring(i)
+              
+              if (texto.substring(0,1) != saida){
+                        documento.value += texto.substring(0,1);
+              }
+              
+            }
+
+            $(document).ready(function(){	
+            $("#cep").mask("99999-999");
+            $("#telefone, #celular").mask("(00) 0000-00000");
+	    });
+        </script>
+    </head>
+    <body>
+        <form method="POST" action="/signup">
+            <input type="text" name="nome" placeholder="Digite seu nome"><br>
+            <input type="text" name="cpf" OnKeyPress="formatar('###.###.###-##', this)" placeholder="Digite seu cpf"><br>
+            <input type="email" name="email" placeholder="Digite seu email"><br>
+            <input type="email" name="email2" placeholder="Confirme seu email"><br>
+            <input type="text" id="telefone"  name="telefone" placeholder="Digite seu telefone"><br>
+            <input type="senha" name="senha" placeholder="Digite sua senha"><br>
+            <input type="senha2" name="senha" placeholder="Confirme sua senha"><br>
+            <h3>Endereço</h3><br>
+            <input type="text" name="logradouro" placeholder="Rua">
+            <input type="text" id="cep" name="cep" placeholder="Cep"><br>
+            <input type="text" name="cidade" placeholder="cidade">
+            <input type="text" name="numero" placeholder="Numero"><br>
+            <input type="text" name="bairro" placeholder="Bairro"><br>
+            <select id="uf" name="estado">
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+            </select><br>
+            <input type="hidden" name="type" value="entregador">
+            <button type="submit">Cadastrar</button>
+
+        </form>
+    </body>
+</html>
