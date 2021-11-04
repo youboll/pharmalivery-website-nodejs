@@ -1,8 +1,70 @@
 <html>
     <head>
+        <!-- Pegar Icon de remédio ou fazer-->
         <title>Pharmalivery</title>
+        <link rel="stylesheet" type="text/css" href="/header.css">
+        <link rel="stylesheet" type="text/css" href="/index.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
     </head>
+    <script>
+        function menuToggle () {
+            const toggleMenu = document.querySelector('.menu');
+            toggleMenu.classList.toggle('active')
+        }
+    </script>
+    
     <body>
+        <div id="header">
+            <img src="/logo.png" onclick="window.location.replace('/');" style="cursor: pointer;">
+            <div id="search-box">
+                <form action="/pesquisa" id="formPesquisa">
+                    <input type="text" name="searchQuery" placeholder="O que você está buscando?">
+                    <a id="searchIcon" onClick="document.getElementById('formPesquisa').submit()">
+                    <i class="fas fa-search" ></i>
+                    </a>
+                </form>
+            </div>
+            <div id="userData">
+                {% if userData and userData.type == 'usuario' %}
+                <div class="action">
+                    <div class="profile">
+                        <ion-icon name="contact"></ion-icon>
+                        <img src="/user.png" onclick="menuToggle()">
+                    </div>
+                    <div class="menu">
+                        <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
+                        <ul>
+                            <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                
+                {% elif userData and userData.type == 'loja'%}
+                    
+                    <div class="action">
+                        <div class="profile">
+                            <ion-icon name="contact"></ion-icon>
+                            <img src="/user.png" onclick="menuToggle()">
+                        </div>
+                        <div class="menu">
+                            <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
+                            <ul>
+                                <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
+                                <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+    
+                            </ul>
+                        </div>
+                    </div>
+        {% endif %}
+            </div>
+        </div>
+    
         Nome:{{produto.nome}}<br>
         Codigo: {{produto.cod_remedio}}<br>
         Laboratório: {{produto.laboratorio}}<br>
@@ -14,8 +76,26 @@
             Quantidade: <input type="number" name="quantidade" value="1">
             <a href="/addCarrinho/{{produto.cod_remedio}}"><button>Adicionar ao carrinho</button></a><br>
         </form>
-        {% for foto in fotos%}
-            <img width="500" height="300" src="{{foto.foto}}">
-        {% endfor %}
+        {% if produto.foto1 != "null" %}
+        <img width="500" height="300" src="{{produto.foto1}}">
+        {% else %}
+        <img src="/fotos/caixa.png" alt="Imagem remedio padrão">
+        {% endif %}
+
+        {% if produto.foto2 != "null" %}
+        <img width="500" height="300" src="{{produto.foto2}}">
+        {% else %}
+        <img src="/fotos/caixa.png" alt="Imagem remedio padrão">
+        {% endif %}
+
+        {% if produto.foto3 != "null" %}
+        <img width="500" height="300" src="{{produto.foto3}}">
+        {% else %}
+        <img src="/fotos/caixa.png" alt="Imagem remedio padrão">
+        {% endif %}
+
     </body>
+    
 </html>
+
+

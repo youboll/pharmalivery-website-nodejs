@@ -1,18 +1,96 @@
 <html>
     <head>
-        <title>Pharmalivery</title>
+        <!-- Pegar Icon de remédio ou fazer-->
+        <title>Index-Pharmalivery</title>
+        <link rel="stylesheet" type="text/css" href="/header.css">
+        <link rel="stylesheet" type="text/css" href="/index.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
     </head>
+    <script>
+        function menuToggle () {
+            const toggleMenu = document.querySelector('.menu');
+            toggleMenu.classList.toggle('active')
+        }
+    </script>
+    
     <body>
-        {% for produto in produtos%}
-        <a href="/produto/{{produto.cod_remedio}}">
-            <div>
-            Nome:{{produto.nome}}<br>
-            Farmacia: {{produto.farmacia}}<br>
+        <div id="header">
+            <img src="/logo.png" onclick="window.location.replace('/');" style="cursor: pointer;">
+            <div id="search-box">
+                <form action="/pesquisa" id="formPesquisa">
+                    <input type="text" name="searchQuery" placeholder="O que você está buscando?" value="{{query}}">
+                    <a id="searchIcon" onClick="document.getElementById('formPesquisa').submit()">
+                    <i class="fas fa-search" ></i>
+                    </a>
+                </form>
             </div>
-        </a>
-        {% endfor %}
-        {%if produtos == undefined%} 
-            Nada encontrado :(
+            <div id="userData">
+                {% if userData and userData.type == 'usuario' %}
+                <div class="action">
+                    <div class="profile">
+                        <ion-icon name="contact"></ion-icon>
+                        <img src="/user.png" onclick="menuToggle()">
+                    </div>
+                    <div class="menu">
+                        <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
+                        <ul>
+                            <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                
+                {% elif userData and userData.type == 'loja'%}
+                    
+                    <div class="action">
+                        <div class="profile">
+                            <ion-icon name="contact"></ion-icon>
+                            <img src="/user.png" onclick="menuToggle()">
+                        </div>
+                        <div class="menu">
+                            <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
+                            <ul>
+                                <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
+                                <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+    
+                            </ul>
+                        </div>
+                    </div>
+                {% else %}
+                <a href="/user/Login/" ><button class="btn-login">Login</button></a>
+                <a href="/cadastro"><button class="btn-login">Cadastrar</button></a>
+            
+        
         {% endif %}
+            </div>
+        </div>
+        <!-- Produtos-->
+        <br>
+        <div class="produtos" style="display: flex;">
+        {% for produto in produtos%}    
+        <div class="container"> 
+            <div class="card">
+                <img src="{{produto.foto1}}" alt="" class="card__img"> 
+
+                <!-- <div class="card__content">  -->
+                    <div class="card__data">
+                        <h1 class="card__title">{{produto.nome}}</h1>
+                        <span class="card__preci">R${{produto.valor}}</span>
+                        <p class="card__description">{{produto.desc}}</p>
+                        <a href="/produto/{{produto.cod_remedio}}" class="card__button">Adicionar ao carrinho</a>
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>   
+        {% endfor %}
+    </div>
     </body>
+    
 </html>
+
+

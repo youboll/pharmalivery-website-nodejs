@@ -1,142 +1,138 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap');
-body{
-    margin: 0px;
-    border: 0px;
-    padding:0;
-}
-#header{
-    background-color: #242424;
-    display: flex;
-    border:5px solid 242424;
-    border-radius: 0px 0px 5% 5%;
-}
-#userData{
-    color:white;
-    margin-top: 3%;
-    margin-left: 23%;
-    font-size: 110%;
-}
-input{
-    border:5px solid #242424;
-    border-radius: 40px;
-    height: 40px;
-    width: 90%;
-}
-#searchIcon{
-    color: white;
-    float:right;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #242424;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-#search-box{
-    margin-left: 23%;
-    margin-right: 0%;
-    border:none;
-    background: none;
-    outline: none;
-    float:left;
-    padding: none;
-    color:white;
-    font-size: 16px;
-    transition: 0.4s;
-    line-height: 40px;
-    width: 35%;
-    margin-top: 2%;
+/*===== GOOGLE FONTS =====*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+/*===== VARIABLES CSS =====*/
+:root {
+  /*===== Colores =====*/
+  --first-color: #00a49d;
+  --white-color: #E9EAEC;
+  --dark-color: #242424;
+  --dark-color-lighten: #F2F5FF;
+  /*===== Fuente y tipografia =====*/
+  --body-font: 'Poppins', sans-serif;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --normal-font-size: 1rem;
+  --small-font-size: .875rem;
 }
 
-img{
-    width: 10%;
-}
-*{
-    margin: 0;
-    padding: 0;
+/*===== BASE =====*/
+*, ::before, ::after {
+  box-sizing: border-box;
 }
 
-.action {
-    position: fixed;
-    top: 20px;
-    right: 30px;
-    color:black;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
 }
-.action .profile{
-    position: relative;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    background-color: white;
+
+h1, p {
+  margin: 0;
 }
-.action .profile img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+
+a {
+  text-decoration: none;
 }
-.action .menu{
-    border: 5px solid #006863;
-    position: absolute;
-    top: 80px;
-    right: -10px;
-    padding: 10px 20px;
-    background-color: #787C8E;
-    width: 200px;
-    box-sizing: 0 5px 25px rgba(0,0,0,0.1);
-    border-radius: 15px;
-    transition: 0.5s;
-    visibility: hidden;
-    opacity: 0;
+
+img {
+  max-width: 100%;
+  height: auto;
 }
-.action .menu.active{
-    visibility: visible;
-    opacity: 1;
+
+/*===== CARD =====*/
+.container {
+  height: 100vh;
+  display: flex;
+  background-color: var(--dark-color-lighten);
+  margin-left: 1%;
 }
-.action .menu::before{
-    content: '';
-    position: absolute;
-    top: -5px;
-    right: 28px;
-    width: 20px;
-    height: 20px;
-    background: #ffffff;
-    transform: rotate(45deg);
+
+.card {
+  width: 320px;
+  height: 400px;
+  background-color: var(--dark-color);
+  border-radius: 1rem;
+  padding: 4rem 2rem 0;
+  color: var(--white-color);
+  overflow-y: hidden;
 }
-.action .menu h3 span{
-    font-size: 14px;
-    color:#cecece;
-    font-weight: 400;
+
+.card__img {
+  position: absolute;
+  width: 260px;
+  filter: drop-shadow(5px 10px 15px rgba(8,9,13,.4));
 }
-.action .menu ul li {
-    list-style: none;
-    padding: 10px 0;
-    border-top: 1px solid rgba(0,0,0,0.5);
-    direction: flex;
-    justify-items: center;
+
+.card__data {
+  transform: translateY(13.2rem);
+  text-align: center;
 }
-.action .menu ul li img {
-    max-width: 20px;
-    margin-right: 10px;
-    opacity: 0.5;
-    transition: 0.5s;
+
+.card__title {
+  font-size: var(--h1-font-size);
+  color: var(--first-color);
+  margin-bottom: .5rem;
 }
-.action .menu ul li:hover img {
-    opacity: 1;
+
+.card__preci {
+  display: inline-block;
+  font-size: var(--h2-font-size);
+  font-weight: 500;
+  margin-bottom: 1.25rem;
 }
-.action .menu ul li a{
-    display: inline-block;
-    text-decoration:none;
-    color:#555;
-    font-weight: 500;
-    transition: 0.5s;
+
+.card__description {
+  font-size: var(--small-font-size);
+  text-align: initial;
+  margin-bottom: 1.25rem;
+  opacity: 0;
 }
-.action .menu ul li:hover a {
-    color:#ff5d94;
+
+.card__button {
+  display: block;
+  width: max-content;
+  padding: 1.125rem 2rem;
+  background-color: var(--first-color);
+  color: var(--white-color);
+  border-radius: .5rem;
+  font-weight: 600;
+  transition: .2s;
+  opacity: 0;
+}
+
+.card__button:hover {
+  box-shadow: 0 18px 40px -12px rgba(55, 0, 255, 0.35);
+}
+
+.card__img, 
+.card__data, 
+.card__title, 
+.card__preci, 
+.card__description {
+  transition: .5s;
+}
+
+/* Hover card effect */
+.card:hover .card__img {
+  transform: translate(-1.5rem, -9.5rem) rotate(-20deg);
+}
+
+.card:hover .card__data {
+  transform: translateY(4.8rem);
+}
+
+.card:hover .card__title {
+  transform: translateX(-2.3rem);
+  margin-bottom: 0;
+}
+
+.card:hover .card__preci {
+  transform: translateX(-6.8rem);
+}
+
+.card:hover .card__description, 
+.card:hover .card__button {
+  transition-delay: .2s;
+  opacity: 1;
 }
