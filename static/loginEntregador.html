@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Login - Index-Pharmalivery</title>
+    </head>
+    <link rel="icon" href="icon.png" type="image/x-icon"/>
+    <script>
+        
+        function formatar(mascara, documento){
+          var i = documento.value.length;
+          var saida = mascara.substring(0,1);
+          var texto = mascara.substring(i)
+          
+          if (texto.substring(0,1) != saida){
+                    documento.value += texto.substring(0,1);
+          }
+          
+        }
+    </script>
+    <body>
+        {% if error%}
+            {{error | safe}}
+        {% endif %}
+        <form method="POST" action="/entregador/login/">
+            <input type="text" name="username" maxlength="14" OnKeyPress="formatar('###.###.###-##', this)" placeholder="Digite seu cpf"><br>
+
+            <input type="password" name="password" placeholder="Digite sua senha">
+            <input type="hidden" name="destination" value="/">
+            <button type="submit">Login</button>
+            
+        </form><br>
+        <a href="/"><button>Index</button></a>
+        <a href="/loja/Login"><button>Entrar como loja</button></a>
+    </body>
+</html>

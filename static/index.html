@@ -43,7 +43,25 @@
                         </ul>
                     </div>
                 </div>
-                
+                {% elif userData and userData.type == 'entregador'%}
+                <div class="action">
+                    <div class="profile">
+                        <ion-icon name="contact"></ion-icon>
+                        <img src="/user.png" onclick="menuToggle()">
+                    </div>
+                    <div class="menu">
+                        <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
+                        <ul>
+                            <li><img src="user.png"><a href="/carrinho">Carrinho de compras</a></li>
+                            <li><img src="edit.png"><a href="/entregador/painel">Painel de entregadas</a></li>
+                            <li><img src="envelope.png"><a href="#">Inbox</a></li>
+                            <li><img src="settings.png"><a href="#">Configurações da conta</a></li>
+                            <li><img src="question.png"><a href="#">Help</a></li>
+                            <li><img src="log-out.png"><a href="/logout?destination=/">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
                 {% elif userData and userData.type == 'loja'%}
                     {{userData.nome_fantasia}}
                     <a><button>Configurações da loja</button></a>

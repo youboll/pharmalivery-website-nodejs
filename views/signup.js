@@ -68,24 +68,24 @@ router.post('/signup/', (req,res) => {
             break;
         case 'entregador':
             var wantedUserData = ['nome','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','cep','senha','senha2'];
-            var checkData = check_req(wantedUserData,req.body); 
+            var checkData = check_req(wantedUserData,req); 
             if (checkData == false) {res.code = 401;res.render('cadastroEntregador.html',{error:"Dados Vazios"});return(0)}
             if (req.body.email != req.body.email2) {res.statusCode = 401;res.render('cadastroEntregador.html',{error:"<strong>Email</strong> não correspondente"});return(0)}
             if (req.body.senha != req.body.senha2) {res.statuscode = 401;res.render('cadastroEntregador.html',{error:"<strong>Senha</strong> não correspondente"});return(0)}
             if (8 > req.body.senha.length || req.body.senha.length > 16) {res.statuscode = 401;res.render('cadastroEntregador.html',{error:"A <strong>Senha</strong> deve ser maior que 8 e menor de 16 caracteres"});return(0)}
-            var nome = req.body.nome; 
-            var senha = hash.sha512().update(req.body.senha).digest('hex');
-            var email = req.body.email;
-            var cpf = req.body.cpf;  
-            var telefone = req.body.telefone; 
-            var logradouro = req.body.logradouro;
-            var numero = req.body.numero;
-            var cidade = req.body.cidade;
-            var bairro = req.body.bairro;
-            var estado = req.body.estado;
-            var cep = req.body.cep;
-            let sqlQuery = "INSERT INTO `pharma`.`entregador` (`nome`, `cpf`, `senha`, `email`, `telefone`, `logradouro`, `numero`, `bairro`, `cidade`, `estado`, `cep`) VALUES ('"+nome+"', '"+cpf+"', '"+senha+"', '"+email+"', '"+telefone+"', '"+logradouro+"', '"+numero+"', '"+bairro+"', '"+cidade+"', '"+estado+"', '"+cep+"');";
-            db.query(sql,(error) => {
+            var nomeEntregador = req.body.nome; 
+            var senhaEntregador = hash.sha512().update(req.body.senha).digest('hex');
+            var emailEntregador = req.body.email;
+            var cpfEntregador = req.body.cpf;  
+            var telefoneEntregador = req.body.telefone; 
+            var logradouroEntregador = req.body.logradouro;
+            var numeroEntregador = req.body.numero;
+            var cidadeEntregador = req.body.cidade;
+            var bairroEntregador = req.body.bairro;
+            var estadoEntregador = req.body.estado;
+            var cepEntregador = req.body.cep;
+            let sqlQuery = "INSERT INTO `pharma`.`entregador` (`nome`, `cpf`, `senha`, `email`, `telefone`, `logradouro`, `numero`, `bairro`, `cidade`, `estado`, `cep`) VALUES ('"+nomeEntregador+"', '"+cpfEntregador+"', '"+senhaEntregador+"', '"+emailEntregador+"', '"+telefoneEntregador+"', '"+logradouroEntregador+"', '"+numeroEntregador+"', '"+bairroEntregador+"', '"+cidadeEntregador+"', '"+estadoEntregador+"', '"+cepEntregador+"');";
+            db.query(sqlQuery,(error) => {
                 if (error) {throw error}
                 res.redirect('/');
             });
