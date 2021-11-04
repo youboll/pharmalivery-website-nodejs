@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 25-Out-2021 às 15:43
+-- Generation Time: 04-Nov-2021 às 18:54
 -- Versão do servidor: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -45,6 +45,35 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 INSERT INTO `cliente` (`Cpf`, `Logradouro`, `Nome`, `Email`, `cidade`, `bairro`, `estado`, `celular`, `senha`) VALUES
 ('111.111.111-11', 'RUa', 'pedroADMIN', 'pedro@admin.com', 'Bernardino', 'JARDIM', 'SP', '(00) 0000-00000', '16d4074e1a1f081538a09b801586da6881e547def93e643e4bac5195d9ef14ecb45d636f34c7cd166408de6cb2ed987d3e53212e3ad12a597cac49e5b64197ab'),
 ('cpf', 'logradouro', 'nome', 'email', 'cidade', 'bairro', 'estado', 'celular', 'senha');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `entregador`
+--
+
+CREATE TABLE IF NOT EXISTS `entregador` (
+  `nome` varchar(50) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `email2` varchar(50) NOT NULL,
+  `telefone` varchar(50) NOT NULL,
+  `logradouro` varchar(50) NOT NULL,
+  `numero` varchar(40) NOT NULL,
+  `cidade` varchar(35) NOT NULL,
+  `bairro` varchar(40) NOT NULL,
+  `estado` varchar(40) NOT NULL,
+  `cep` varchar(40) NOT NULL,
+  `senha` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `entregador`
+--
+
+INSERT INTO `entregador` (`nome`, `cpf`, `email`, `email2`, `telefone`, `logradouro`, `numero`, `cidade`, `bairro`, `estado`, `cep`, `senha`) VALUES
+('PedroAdmin', '111.111.111-11', 'admin@admin.com', '', '(18) 5151-51515', 'Admin', '15', 'Bernardino', 'efef', 'AP', '18960-000', '16d4074e1a1f081538a09b801586da6881e547def93e643e4bac5195d9ef14ec'),
+('er', 'ere.r', 'er@etec.com', '', '(', 'erer', 'ererre', 'er', 'wdwd', 'AC', '-', 'd8b98a9504562ad66a');
 
 -- --------------------------------------------------------
 
@@ -213,6 +242,12 @@ CREATE TABLE IF NOT EXISTS `remedios_pedido` (
 --
 ALTER TABLE `cliente`
  ADD PRIMARY KEY (`Cpf`);
+
+--
+-- Indexes for table `entregador`
+--
+ALTER TABLE `entregador`
+ ADD PRIMARY KEY (`cpf`), ADD KEY `cpf` (`cpf`), ADD KEY `cpf_2` (`cpf`);
 
 --
 -- Indexes for table `estoque`
