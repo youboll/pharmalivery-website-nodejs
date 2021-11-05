@@ -71,7 +71,7 @@ router.post('/signup/', (req,res) => {
             break;
         case 'entregador':
       break;
-=======
+
             var wantedUserData = ['nome','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','cep','senha','senha2'];
             var checkData = check_req(wantedUserData,req); 
             if (checkData == false) {res.code = 401;res.render('cadastroEntregador.html',{error:"Dados Vazios"});return(0)}
