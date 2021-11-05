@@ -1,24 +1,23 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
--- https://www.phpmyadmin.net/
+-- version 4.2.11
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14-Set-2021 às 00:43
--- Versão do servidor: 10.4.17-MariaDB
--- versão do PHP: 8.0.0
+-- Generation Time: 04-Nov-2021 às 18:54
+-- Versão do servidor: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Banco de dados: `pharma`
+-- Database: `pharma`
 --
 
 -- --------------------------------------------------------
@@ -27,7 +26,7 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `cliente`
 --
 
-CREATE TABLE `cliente` (
+CREATE TABLE IF NOT EXISTS `cliente` (
   `Cpf` varchar(14) NOT NULL,
   `Logradouro` varchar(50) DEFAULT NULL,
   `Nome` varchar(50) DEFAULT NULL,
@@ -50,10 +49,39 @@ INSERT INTO `cliente` (`Cpf`, `Logradouro`, `Nome`, `Email`, `cidade`, `bairro`,
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `entregador`
+--
+
+CREATE TABLE IF NOT EXISTS `entregador` (
+  `nome` varchar(50) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `email2` varchar(50) NOT NULL,
+  `telefone` varchar(50) NOT NULL,
+  `logradouro` varchar(50) NOT NULL,
+  `numero` varchar(40) NOT NULL,
+  `cidade` varchar(35) NOT NULL,
+  `bairro` varchar(40) NOT NULL,
+  `estado` varchar(40) NOT NULL,
+  `cep` varchar(40) NOT NULL,
+  `senha` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `entregador`
+--
+
+INSERT INTO `entregador` (`nome`, `cpf`, `email`, `email2`, `telefone`, `logradouro`, `numero`, `cidade`, `bairro`, `estado`, `cep`, `senha`) VALUES
+('PedroAdmin', '111.111.111-11', 'admin@admin.com', '', '(18) 5151-51515', 'Admin', '15', 'Bernardino', 'efef', 'AP', '18960-000', '16d4074e1a1f081538a09b801586da6881e547def93e643e4bac5195d9ef14ec'),
+('er', 'ere.r', 'er@etec.com', '', '(', 'erer', 'ererre', 'er', 'wdwd', 'AC', '-', 'd8b98a9504562ad66a');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `estoque`
 --
 
-CREATE TABLE `estoque` (
+CREATE TABLE IF NOT EXISTS `estoque` (
   `cod_produto` char(10) NOT NULL,
   `nome_produto` char(10) DEFAULT NULL,
   `validade` char(10) DEFAULT NULL
@@ -62,12 +90,32 @@ CREATE TABLE `estoque` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `foto_produto`
+--
+
+CREATE TABLE IF NOT EXISTS `foto_produto` (
+`cod` int(11) NOT NULL,
+  `id_produto` int(11) NOT NULL,
+  `foto` varchar(100) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `foto_produto`
+--
+
+INSERT INTO `foto_produto` (`cod`, `id_produto`, `foto`) VALUES
+(11, 37, 'http://localhost//pharmalivery/252Variação Linguística.pdf'),
+(12, 47, 'http://localhost//pharmalivery/411WhatsApp Image 2021-09-25 at 10.41.28.jpeg');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `loja`
 --
 
-CREATE TABLE `loja` (
+CREATE TABLE IF NOT EXISTS `loja` (
   `nome_fantasia` varchar(25) NOT NULL,
-  `nota` float DEFAULT 0 COMMENT 'Classificacao da loja',
+  `nota` float DEFAULT '0' COMMENT 'Classificacao da loja',
   `cnpj` varchar(18) NOT NULL,
   `senha` varchar(128) NOT NULL,
   `insc_estadual` varchar(15) NOT NULL,
@@ -97,25 +145,40 @@ INSERT INTO `loja` (`nome_fantasia`, `nota`, `cnpj`, `senha`, `insc_estadual`, `
 -- Estrutura da tabela `pedido`
 --
 
-CREATE TABLE `pedido` (
+CREATE TABLE IF NOT EXISTS `pedido` (
   `cod_pedido` char(10) NOT NULL,
-  `data_pedido` char(10) DEFAULT NULL,
+  `data_pedido` varchar(20) DEFAULT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `rua` varchar(50) NOT NULL,
+  `numero` int(11) NOT NULL,
+  `bairro` varchar(50) NOT NULL,
+  `cep` varchar(20) NOT NULL,
+  `cidade` varchar(15) NOT NULL,
+  `estado` varchar(30) NOT NULL,
+  `latitude` varchar(100) NOT NULL,
+  `longitude` varchar(100) NOT NULL,
   `valor` char(10) DEFAULT NULL,
-  `Cpf` char(10) DEFAULT NULL
+  `autorizado` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `pedido`
+--
+
+INSERT INTO `pedido` (`cod_pedido`, `data_pedido`, `cpf`, `rua`, `numero`, `bairro`, `cep`, `cidade`, `estado`, `latitude`, `longitude`, `valor`, `autorizado`) VALUES
+('cod_pedido', 'data_pedid', 'cpf', 'rua', 123, 'bairro', 'cep', 'cidade', 'estado', 'latitude', 'longitude', 'valor', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `pedido_receita`
+-- Estrutura da tabela `pedido_remedio`
 --
 
-CREATE TABLE `pedido_receita` (
+CREATE TABLE IF NOT EXISTS `pedido_remedio` (
   `codpedido_receita` char(10) NOT NULL,
   `cod_pedido` char(10) DEFAULT NULL,
   `cod_receita` char(10) DEFAULT NULL,
-  `qtdadeItem` char(10) DEFAULT NULL,
-  `valorItem` char(10) DEFAULT NULL
+  `qtdadeItem` char(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -124,7 +187,7 @@ CREATE TABLE `pedido_receita` (
 -- Estrutura da tabela `receita`
 --
 
-CREATE TABLE `receita` (
+CREATE TABLE IF NOT EXISTS `receita` (
   `cod_receita` char(10) NOT NULL,
   `quant_remedio` char(10) DEFAULT NULL,
   `CRM_medico` char(10) DEFAULT NULL,
@@ -137,15 +200,26 @@ CREATE TABLE `receita` (
 -- Estrutura da tabela `remedios`
 --
 
-CREATE TABLE `remedios` (
-  `cod_remedio` char(10) NOT NULL,
-  `valor` char(10) DEFAULT NULL,
-  `nome` char(10) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `remedios` (
+  `farmacia` varchar(25) NOT NULL,
+`cod_remedio` int(10) NOT NULL,
+  `valor` float DEFAULT NULL,
+  `valorFrete` int(11) NOT NULL,
+  `nome` varchar(30) DEFAULT NULL,
   `laboratorio` char(10) DEFAULT NULL,
   `tipo` char(10) DEFAULT NULL,
   `qtdade_unidade` char(10) DEFAULT NULL,
-  `qtdadeEstoque` char(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `qtdadeEstoque` char(10) DEFAULT NULL,
+  `desc` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `remedios`
+--
+
+INSERT INTO `remedios` (`farmacia`, `cod_remedio`, `valor`, `valorFrete`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES
+('00.000.000/0000-00', 10, 12, 3, 'Hidroxido de pedro', 'efef', 'Veneno', '15', '20', 'teste'),
+('00.000.000/0000-00', 47, 0, 0, 'bruh', 'br', 'er', 'NaN', 'NaN', 'bre');
 
 -- --------------------------------------------------------
 
@@ -153,59 +227,90 @@ CREATE TABLE `remedios` (
 -- Estrutura da tabela `remedios_pedido`
 --
 
-CREATE TABLE `remedios_pedido` (
+CREATE TABLE IF NOT EXISTS `remedios_pedido` (
   `codproduto_estoque` char(10) NOT NULL,
   `cod_remedio` char(10) DEFAULT NULL,
   `cod_pedido` char(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Índices para tabelas despejadas
+-- Indexes for dumped tables
 --
 
 --
--- Índices para tabela `cliente`
+-- Indexes for table `cliente`
 --
 ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`Cpf`);
+ ADD PRIMARY KEY (`Cpf`);
 
 --
--- Índices para tabela `estoque`
+-- Indexes for table `entregador`
+--
+ALTER TABLE `entregador`
+ ADD PRIMARY KEY (`cpf`), ADD KEY `cpf` (`cpf`), ADD KEY `cpf_2` (`cpf`);
+
+--
+-- Indexes for table `estoque`
 --
 ALTER TABLE `estoque`
-  ADD PRIMARY KEY (`cod_produto`);
+ ADD PRIMARY KEY (`cod_produto`);
 
 --
--- Índices para tabela `pedido`
+-- Indexes for table `foto_produto`
+--
+ALTER TABLE `foto_produto`
+ ADD PRIMARY KEY (`cod`);
+
+--
+-- Indexes for table `loja`
+--
+ALTER TABLE `loja`
+ ADD PRIMARY KEY (`cnpj`);
+
+--
+-- Indexes for table `pedido`
 --
 ALTER TABLE `pedido`
-  ADD PRIMARY KEY (`cod_pedido`);
+ ADD PRIMARY KEY (`cod_pedido`);
 
 --
--- Índices para tabela `pedido_receita`
+-- Indexes for table `pedido_remedio`
 --
-ALTER TABLE `pedido_receita`
-  ADD PRIMARY KEY (`codpedido_receita`);
+ALTER TABLE `pedido_remedio`
+ ADD PRIMARY KEY (`codpedido_receita`);
 
 --
--- Índices para tabela `receita`
+-- Indexes for table `receita`
 --
 ALTER TABLE `receita`
-  ADD PRIMARY KEY (`cod_receita`);
+ ADD PRIMARY KEY (`cod_receita`);
 
 --
--- Índices para tabela `remedios`
+-- Indexes for table `remedios`
 --
 ALTER TABLE `remedios`
-  ADD PRIMARY KEY (`cod_remedio`);
+ ADD PRIMARY KEY (`cod_remedio`);
 
 --
--- Índices para tabela `remedios_pedido`
+-- Indexes for table `remedios_pedido`
 --
 ALTER TABLE `remedios_pedido`
-  ADD PRIMARY KEY (`codproduto_estoque`);
-COMMIT;
+ ADD PRIMARY KEY (`codproduto_estoque`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `foto_produto`
+--
+ALTER TABLE `foto_produto`
+MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `remedios`
+--
+ALTER TABLE `remedios`
+MODIFY `cod_remedio` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
