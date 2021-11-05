@@ -10,4 +10,5 @@ router.use(require('./views/produtos.js'));
 router.use(require('./views/carrinho.js'));
 router.use(require('./views/compra.js'));
 router.use(require('./views/entregador.js'));
+
 module.exports = router;

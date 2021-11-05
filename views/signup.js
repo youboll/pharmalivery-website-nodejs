@@ -11,13 +11,14 @@ router.post('/signup/', (req,res) => {
             var wantedData = ['nome_fantasia', 'cnpj', 'insc_estadual', 'email','email2', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'telefone', 'celular','senha','senha2'];
             let senha = hash.sha512().update(req.body.senha).digest('hex');
             
-            let check =  check_req(wantedData,req.body) 
+            
             if (check == false) {res.statusCode = 401;res.render('lojaCadastro.html',{error:"Dados vazios"});return(0)}
 
             if (req.body.email != req.body.email2) {res.statusCode = 401;res.render('lojaCadastro.html',{error:"<strong>Email</strong> não correspondente"});return(0)}
             if (req.body.senha != req.body.senha2) {res.statuscode = 401;res.render('lojCadastro.html',{error:"<strong>Senh</strong> não correspondente"});return(0)}
         
             if (check != false) {
+                let check =  check_req(wantedData,req) 
                 let sql = "INSERT INTO `loja` (`nome_fantasia`, `cnpj`, `insc_estadual`, `site`, `email`, `cep`, `endereco`, `numero`, `bairro`, `cidade`, `estado`, `telefone`, `celular`,`senha`) VALUES ('"+req.body.nome_fantasia+"', '"+req.body.cnpj+"', '"+req.body.insc_estadual+"', '"+req.body.site+"', '"+req.body.email+"', '"+req.body.cep+"', '"+req.body.endereco+"', '"+req.body.numero+"', '"+req.body.bairro+"', '"+req.body.cidade+"', '"+req.body.estado+"', '"+req.body.telefone+"', '"+req.body.celular+"','"+senha+"')";
 
                 db.query(sql,(error,results) => {
@@ -33,8 +34,10 @@ router.post('/signup/', (req,res) => {
             break;
 
         case 'usuario':
-            var wantedUserData = ['username','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','senha','senha2'];
-            var checkData = check_req(wantedUserData,req.body); 
+
+            let wantedUserData = ['username','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','senha','senha2'];
+            let checkData = check_req(wantedUserData,req); 
+
             
             console.log("Empty: ",checkData)
 
@@ -67,6 +70,8 @@ router.post('/signup/', (req,res) => {
             
             break;
         case 'entregador':
+      break;
+=======
             var wantedUserData = ['nome','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','cep','senha','senha2'];
             var checkData = check_req(wantedUserData,req); 
             if (checkData == false) {res.code = 401;res.render('cadastroEntregador.html',{error:"Dados Vazios"});return(0)}
@@ -91,6 +96,7 @@ router.post('/signup/', (req,res) => {
             });
 
             break;
+
         default:
             res.statusCode = 401;
             res.send("tipo desconhecido");return(0);

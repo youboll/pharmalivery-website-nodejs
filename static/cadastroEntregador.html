@@ -24,7 +24,11 @@
         </script>
     </head>
     <body>
-        {{error | safe}}
+
+        {% if error%}
+            <div id="error" >{{error | safe}}</div>
+        {% endif %}
+
         <form method="POST" action="/signup">
             <input type="text" name="nome" placeholder="Digite seu nome"><br>
             <input type="text" name="cpf" OnKeyPress="formatar('###.###.###-##', this)" placeholder="Digite seu cpf"><br>

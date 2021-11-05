@@ -1,8 +1,10 @@
 <html>
     <head>
         <!-- Pegar Icon de remédio ou fazer-->
-        <title>Index-Pharmalivery</title>
+        <title>Pharmalivery</title>
+        <link rel="stylesheet" type="text/css" href="/header.css">
         <link rel="stylesheet" type="text/css" href="/index.css">
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
     </head>
     <script>
@@ -14,7 +16,7 @@
     
     <body>
         <div id="header">
-            <img src="/logo.png">
+            <img src="/logo.png" onclick="window.location.replace('/');" style="cursor: pointer;">
             <div id="search-box">
                 <form action="/pesquisa" id="formPesquisa">
                     <input type="text" name="searchQuery" placeholder="O que você está buscando?">
@@ -33,12 +35,9 @@
                     <div class="menu">
                         <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
                         <ul>
-                            <li><img src="user.png"><a href="/carrinho">Carrinho de compras</a></li>
-                            <li><img src="edit.png"><a href="#">Edit profile</a></li>
-                            <li><img src="envelope.png"><a href="#">Inbox</a></li>
-                            <li><img src="settings.png"><a href="#">Configurações da conta</a></li>
-                            <li><img src="question.png"><a href="#">Help</a></li>
-                            <li><img src="log-out.png"><a href="/logout?destination=/">Logout</a></li>
+                            <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
 
                         </ul>
                     </div>
@@ -63,10 +62,23 @@
                     </div>
                 </div>
                 {% elif userData and userData.type == 'loja'%}
-                    {{userData.nome_fantasia}}
-                    <a><button>Configurações da loja</button></a>
-                    <a href="/logout?destination=/"><button>Sair</button></a>
-                    <a href="/loja/estoque"><button>Gerenciar estoque</button></a>
+                    
+                    <div class="action">
+                        <div class="profile">
+                            <ion-icon name="contact"></ion-icon>
+                            <img src="/user.png" onclick="menuToggle()">
+                        </div>
+                        <div class="menu">
+                            <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
+                            <ul>
+                                <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
+                                <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+    
+                            </ul>
+                        </div>
+                    </div>
                 {% else %}
                 <a href="/user/Login/" ><button class="btn-login">Login</button></a>
                 <a href="/cadastro"><button class="btn-login">Cadastrar</button></a>
@@ -77,10 +89,24 @@
         </div>
         <!-- Produtos-->
         <br>
-        {% for produto in produtos%}
-        <a href="/produto/{{produto.cod_remedio}}">{{produto.nome}}</a>
+        <div class="produtos" style="display: flex;">
+        {% for produto in produtos%}    
+        <div class="container"> 
+            <div class="card">
+                <img src="{{produto.foto1}}" alt="" class="card__img"> 
+
+                <!-- <div class="card__content">  -->
+                    <div class="card__data">
+                        <h1 class="card__title">{{produto.nome}}</h1>
+                        <span class="card__preci">R${{produto.valor}}</span>
+                        <p class="card__description">{{produto.desc}}</p>
+                        <a href="/produto/{{produto.cod_remedio}}" class="card__button">Adicionar ao carrinho</a>
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>   
         {% endfor %}
-        
+    </div>
     </body>
     
 </html>

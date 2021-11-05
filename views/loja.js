@@ -102,28 +102,11 @@ router.post('/loja/produto', (req,res) => {
     let userAuth = user.getJWtByCookie(req);
     console.log("Dados JWT "+userAuth)
     if(userAuth == false || userAuth.type != "loja") {res.statusCode = 401;res.send("Nao autorizada");return(0);}
-
-    const nome = req.body.nome;
-    const desc = req.body.desc;
-    const lab = req.body.lab;
-    const valor = parseFloat(req.body.valor);
-    const qtd_unit = parseInt(req.body.qtd_unit);
-    const qtd_est = parseInt(req.body.qtd_est);
-    const tipo = req.body.tipo;
-    const frete = parseInt(req.body.frete);
-    let sql = "INSERT INTO `pharma`.`remedios` (`farmacia`,`valor`,`valorFrete`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`) VALUES ('"+userAuth.cnpj+"','"+nome+"', '"+valor+"','"+frete+"', '"+lab+"', '"+tipo+"', '"+qtd_unit+"', '"+qtd_est+"', '"+desc+"');";
-    db.query(sql, (error,result) => {
-        if (error) {
-            throw error;
-            //res.render('addProduto.html',{erro:"Erro desconhecido"});return(0);
-        } else {
-            res.redirect('/loja/estoque');
-        }
-    })
-
+    let urls = []
     if (req.files) {
         //C:\xampp\htdocs\pharmalivery
-        let dir = "/xampp/htdocs/pharmalivery/";
+        
+        let dir = "/pedro/projects/pharmalivery-website-nodejs/static/fotos/";
         //dir = path.normalize(dir)
         let wanted_files = ['file1','file2','file3','file4'];
         for (var x=0;x<wanted_files.length;x++) {
@@ -135,21 +118,36 @@ router.post('/loja/produto', (req,res) => {
                         throw(err);
                     }
                 })
-                let sql = "SELECT * FROM remedios WHERE nome = '"+nome+"'";
-                db.query(sql,(error,results) => {
-                    if (error) {throw error;}
-                    let url = "http://localhost/"+(dir+photoName).substring(13)
-                    let query = "INSERT INTO `foto_produto` (`id_produto`, `foto`) VALUES ('"+results[0].cod_remedio+"', '"+url+"');";
-                    db.query(query, (error,results) => {
-                        if (error) {throw error;}
-                    })
-                })
+       
+                urls.push('/fotos/'+photoName);
             }
 
         }
         
 
     }
+    const nome = req.body.nome;
+    const desc = req.body.desc;
+    const lab = req.body.lab;
+    const valor = parseFloat(req.body.valor);
+    const qtd_unit = parseInt(req.body.qtd_unit);
+    const qtd_est = parseInt(req.body.qtd_est);
+    const tipo = req.body.tipo;
+    const frete = parseInt(req.body.frete);
+    const foto1 = (urls[0] != undefined)? urls[0] : null;
+    const foto2 = (urls[1] != undefined)? urls[1] : null;
+    const foto3 = (urls[2] != undefined)? urls[2] : null;
+    let sql = "INSERT INTO `pharma`.`remedios` (`farmacia`,`valor`,`valorFrete`, `nome`, `laboratorio`, `tipo`, `qtdade_unidade`, `qtdadeEstoque`, `desc`,`foto1`,`foto2`,`foto3`) VALUES ('"+userAuth.cnpj+"','"+valor+"', '"+frete+"','"+nome+"', '"+lab+"', '"+tipo+"', '"+qtd_unit+"', '"+qtd_est+"', '"+desc+"','"+foto1+"','"+foto2+"','"+foto3+"');";
+    db.query(sql, (error,result) => {
+        if (error) {
+            throw error;
+            //res.render('addProduto.html',{erro:"Erro desconhecido"});return(0);
+        } else {
+            res.redirect('/loja/estoque');
+        }
+    })
+
+    
 
 })
 

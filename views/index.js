@@ -11,6 +11,11 @@ Router.get('/', (req,res) => {
     let sql = "SELECT * FROM `remedios`";
     db.query(sql,(error,results) => {
         if (error) {throw error;}
+        for (var x=0;x<results.length;x++) {
+            if (results[x].desc.length > 60) {
+                results[x].desc = results[x].desc.substr(0,60); 
+            }
+        }
         res.render('index.html',{"userData": userData,"produtos":results});
     })
     
