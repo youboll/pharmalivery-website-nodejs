@@ -73,8 +73,8 @@ router.post('/signup/', (req,res) => {
      
 
             var wantedEntregadorData = ['nome','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','cep','senha','senha2'];
-            var checkData = check_req(wantedEntregadorData,req); 
-            if (checkData == false) {res.code = 401;res.render('cadastroEntregador.html',{error:"Dados Vazios"});return(0)}
+            var checkEntregadorData = check_req(wantedEntregadorData,req); 
+            if (checkEntregadorData == false) {res.code = 401;res.render('cadastroEntregador.html',{error:"Dados Vazios"});return(0)}
             if (req.body.email != req.body.email2) {res.statusCode = 401;res.render('cadastroEntregador.html',{error:"<strong>Email</strong> não correspondente"});return(0)}
             if (req.body.senha != req.body.senha2) {res.statuscode = 401;res.render('cadastroEntregador.html',{error:"<strong>Senha</strong> não correspondente"});return(0)}
             if (8 > req.body.senha.length || req.body.senha.length > 16) {res.statuscode = 401;res.render('cadastroEntregador.html',{error:"A <strong>Senha</strong> deve ser maior que 8 e menor de 16 caracteres"});return(0)}
