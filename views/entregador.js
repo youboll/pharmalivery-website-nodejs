@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const userData = require('./user.js').userJWT;
 const JWT = require('jsonwebtoken');
 const cookie = require('cookie-parser');
 const hash = require('hash.js');
@@ -43,6 +43,16 @@ router.post('/entregador/login/', (req,res) => {
         res.statusCode = 401;res.redirect('/');
     }
     
+})
+
+router.get('/entregador', (req,res) => {
+    let user = new userData();
+    let userInfo = user.getJWtByCookie(req);
+    if (userInfo.type!="entregador" || userInfo == false) {
+        res.redirect('/');
+    } else {
+        res.render('entregador.html',{})
+    }
 })
 
 module.exports = router;

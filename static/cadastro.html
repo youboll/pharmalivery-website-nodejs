@@ -1,37 +1,30 @@
-<meta charset="UTF-8">
 <html>
     <head>
         <title>Pharmalivery</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-        <script>
-        
-            function formatar(mascara, documento){
-              var i = documento.value.length;
-              var saida = mascara.substring(0,1);
-              var texto = mascara.substring(i)
-              
-              if (texto.substring(0,1) != saida){
-                        documento.value += texto.substring(0,1);
-              }
-              
-            }
-
-            $(document).ready(function(){	
-            $("#cep").mask("99999-999");
-            $("#telefone, #celular").mask("(00) 0000-00000");
-	    });
-        </script>
     </head>
+    <link rel="stylesheet" type="text/css" href="/login.css"> 
+    
+    <script>
+        
+        function formatar(mascara, documento){
+          var i = documento.value.length;
+          var saida = mascara.substring(0,1);
+          var texto = mascara.substring(i)
+          
+          if (texto.substring(0,1) != saida){
+                    documento.value += texto.substring(0,1);
+          }
+          
+        }
+    </script>
     <body>
-
-        {% if error%}
-            <div id="error" >{{error | safe}}</div>
-        {% endif %}
-
-        <form method="POST" action="/signup">
-            <input type="text" name="nome" placeholder="Digite seu nome"><br>
-            <input type="text" name="cpf" OnKeyPress="formatar('###.###.###-##', this)" placeholder="Digite seu cpf"><br>
+        
+        <form class="box" method="POST" action="/signup">
+            {% if error%}
+            <div id="error" style="color:red;background: none;">{{error | safe}}</div>
+            {% endif %}
+            <input type="text" name="username" placeholder="Digite seu nome"><br>
+            <input type="text" name="cpf" id="cpf" placeholder="Digite seu cpf"><br>
             <input type="email" name="email" placeholder="Digite seu email"><br>
             <input type="email" name="email2" placeholder="Confirme seu email"><br>
             <input type="text" id="telefone"  name="telefone" placeholder="Digite seu telefone"><br>
@@ -72,9 +65,19 @@
                 <option value="SE">Sergipe</option>
                 <option value="TO">Tocantins</option>
             </select><br>
-            <input type="hidden" name="type" value="entregador">
+            <input type="hidden" name="type" value="usuario">
+            <input type="submit" name="" value="Login">
+            <a href="/"><button type="button">Index</button></a>
+        <a href="/loja/Login"><button type="button">Entrar como loja</button></a>
+        </form><br>
+        
+    </body>
+</html>
+
+<!--
+    <form method="POST" action="/signup">
+            
             <button type="submit">Cadastrar</button>
 
         </form>
-    </body>
-</html>
+-->

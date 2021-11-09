@@ -3,7 +3,7 @@
         <title>Pharmalivery</title>
     </head>
     <body>
-        <form action="" method="POST">
+        <form action="/compra/registraPedido/" method="POST" id="form">
             <h1>Endereço</h1><br>
             <input type="text" name="rua" placeholder="Logadouro"> <input type="number" name="numero" placeholder="Nº" ><br>
             <input type="text" name="cep" placeholder="CEP"><br>
@@ -39,6 +39,32 @@
                 <option value="TO">Tocantins</option>
             </select><br>
             Total: {{valor}} Frete: {{frete}}
+            <button type="submit">Confirmar compra</button>
         </form>
+        <script>
+            var options = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+            };
+
+            function success(pos) {
+            var crd = pos.coords;
+
+            console.log('Sua posição atual é:');
+            console.log('Latitude : ' + crd.latitude);
+            console.log('Longitude: ' + crd.longitude);
+            console.log('Mais ou menos ' + crd.accuracy + ' metros.');
+            let formDiv = document.getElementById('form');
+            formDiv.innerHTML = formDiv.innerHTML+'<input type="hidden" name="latitude" value="'+crd.latitude+'">'+'<input type="hidden" name="longitude" value="'+crd.longitude+'">';
+            };
+
+            function error(err) {
+            console.warn('ERROR(' + err.code + '): ' + err.message);
+            };
+
+            navigator.geolocation.getCurrentPosition(success, error, options);
+
+        </script>
     </body>
 </html>

@@ -50,7 +50,7 @@ router.get('/addCarrinho/:id_produto', (req,res) => {
         cartCookie.produtos.push(results[0]);
         let cartJWT = JWT.sign(cartCookie,require('../index.js').JWTPrivateKey)
         res.cookie('cart',cartJWT);
-        res.send("ok")
+        res.redirect('/carrinho');
     })
 })
 //Terminar ROTA

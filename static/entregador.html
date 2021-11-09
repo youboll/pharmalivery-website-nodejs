@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <!-- Pegar Icon de remédio ou fazer-->
+        <title>Pharmalivery</title>
+        <link rel="stylesheet" type="text/css" href="/header.css">
+        <link rel="stylesheet" type="text/css" href="/index.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
+    </head>
+    <script>
+        function menuToggle () {
+            const toggleMenu = document.querySelector('.menu');
+            toggleMenu.classList.toggle('active')
+        }
+    </script>
+    
+    <body>
+        <div id="header">
+            <img src="/logo.png" onclick="window.location.replace('/');" style="cursor: pointer;">
+            <div id="search-box">
+                <form action="/pesquisa" id="formPesquisa">
+                    <input type="text" name="searchQuery" placeholder="O que você está buscando?">
+                    <a id="searchIcon" onClick="document.getElementById('formPesquisa').submit()">
+                    <i class="fas fa-search" ></i>
+                    </a>
+                </form>
+            </div>
+            <div id="userData">
+                
+                <div class="action">
+                    <div class="profile">
+                        <ion-icon name="contact"></ion-icon>
+                        <img src="/user.png" onclick="menuToggle()">
+                    </div>
+                    <div class="menu">
+                        <h3>{{userData.Nome}} </h3><span>Entregador(a) Pharmalivery</span>
+                        <ul>
+                            <li><img src="/shopping-cart.png"><a href="/carrinho">Historico de entregas</a></li>
+                            <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+</html>

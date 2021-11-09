@@ -3,9 +3,9 @@
 /*===== VARIABLES CSS =====*/
 :root {
   /*===== Colores =====*/
-  --first-color: #00a49d;
-  --white-color: #E9EAEC;
-  --dark-color: #242424;
+  --first-color: #b5aa3b;
+  --white-color: #FFF;
+  --dark-color: #4b9994;
   --dark-color-lighten: #F2F5FF;
   /*===== Fuente y tipografia =====*/
   --body-font: 'Poppins', sans-serif;
