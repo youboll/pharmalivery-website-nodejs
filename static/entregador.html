@@ -3,18 +3,29 @@
         <!-- Pegar Icon de remédio ou fazer-->
         <title>Pharmalivery</title>
         <link rel="stylesheet" type="text/css" href="/header.css">
-        <link rel="stylesheet" type="text/css" href="/index.css">
-
+        
+        <link rel="stylesheet" href="entregador.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
     </head>
+    <script type="text/javascript">
+        localStorage.setItem('allData','{{entregas | dump | safe}}')
+    </script>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         function menuToggle () {
             const toggleMenu = document.querySelector('.menu');
             toggleMenu.classList.toggle('active')
         }
+        
     </script>
-    
-    <body>
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+
+   
+
+    <body  style="overflow: hidden;">
+        <!-- Cabeçalho-->
         <div id="header">
             <img src="/logo.png" onclick="window.location.replace('/');" style="cursor: pointer;">
             <div id="search-box">
@@ -33,9 +44,10 @@
                         <img src="/user.png" onclick="menuToggle()">
                     </div>
                     <div class="menu">
-                        <h3>{{userData.Nome}} </h3><span>Entregador(a) Pharmalivery</span>
+                        <h3>{{userData.nome}} </h3><span>Entregador(a) Pharmalivery</span>
                         <ul>
                             <li><img src="/shopping-cart.png"><a href="/carrinho">Historico de entregas</a></li>
+                            <li><img src="#"><a href="/entregador/meusPedidos">Meus pedidos</a></li>
                             <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
 
                         </ul>
@@ -44,4 +56,32 @@
                 
             </div>
         </div>
+        <!--Pedidos-->
+        <div id="sidebar">
+        <div class="pedidos" style="overflow-y:auto;">
+            {% for entrega in entregas%} 
+                <div id="cardPedido" onclick="showData({{entrega[0].cod_pedido}})">
+                    <h2>{{entrega[0].cod_pedido}}</h2>
+                    <div id="desc">{{entrega[0].rua}} {{entrega[0].cidade}}</div>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+        <div id="dadosPedido">
+            <div id="pedidoNome"></div>
+            <div id="pedidoRua"></div>
+            <div id="pedidoBairro"></div>
+            <div id="pedidoCidade"></div>
+            <h3>Produtos</h3>
+            <div id="pedidoProdutos">
+
+            </div>
+
+        </div>
+        </div>-->
+        <div id="map"></div>
+        <script src="/entregador.js"></script>
+
+    
+
 </html>

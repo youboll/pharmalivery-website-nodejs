@@ -7,8 +7,6 @@ body{
 #header{
     background-color: #a0d2cc;
     display: flex;
-    border:5px solid 242424;
-    
 }
 #userData{
     color:white;

@@ -46,7 +46,7 @@ router.post('/compra/registraPedido',async (req,res) => {
         
         for (var x=0;x<cart.produtos.length;x++) {
             
-            let produtoSql = "INSERT INTO `remedios_pedido` (`cod_remedio`, `cod_pedido`) VALUES ('"+cart.produtos[x].cod_remedio+"', '"+idPedido+"');";
+            let produtoSql = "INSERT INTO `remedios_pedido` (`cod_remedio`, `cod_pedido`,`quantidade`) VALUES ('"+cart.produtos[x].cod_remedio+"', '"+idPedido+"','"+cart.produtos[x].quantidade+"');";
             db.query(produtoSql,(error,results) => {
                 if (error) {throw error}
             })

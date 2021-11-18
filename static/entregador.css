@@ -1,0 +1,52 @@
+#sidebar{
+    background-color: #a0d2cc;
+    width: 26%;
+    height: 100%;
+}
+#desc{
+    opacity: .8;
+}
+#cardPedido{
+    cursor: pointer;
+    margin-left: 3%;
+}
+
+#cardPedido:hover{
+    background-color: #6ea8a1;
+    padding: 10;
+}
+#map{
+    height: 84%;
+    position: absolute;
+    overflow: hidden;
+    top: 16%;
+    left: 25%;
+    width: 75%;
+}
+#dadosPedido {
+    align-self: baseline;
+    background-color: #6ea8a1;
+    visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+button{
+    background-color: #005f54;
+}
+button:hover{
+    background: #006a71 ;
+}
+button{
+    border: 0;
+    background: #242424;
+    margin:20px auto;
+    text-align: center;
+    border:2px solid #b5aa3b;
+    padding: 9px 19px;
+    outline: none;
+    color:white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor:pointer;
+}

@@ -48,11 +48,54 @@ router.post('/entregador/login/', (req,res) => {
 router.get('/entregador', (req,res) => {
     let user = new userData();
     let userInfo = user.getJWtByCookie(req);
-    if (userInfo.type!="entregador" || userInfo == false) {
-        res.redirect('/');
-    } else {
-        res.render('entregador.html',{})
-    }
+    if (userInfo == false || userInfo == undefined) {res.redirect('/entregador/login');return(0);}
+    let sql = "SELECT * FROM `pedido` INNER JOIN `remedios_pedido` ON remedios_pedido.cod_pedido = pedido.cod_pedido INNER JOIN remedios ON remedios.cod_remedio = remedios_pedido.cod_remedio WHERE pagamentoEfetuado = 1 AND entregaEfetuada = 0 AND atribuida=0;";
+    db.query(sql,(error,results) => {
+        if (results.length == 0 ) {res.render('entregador.html',{})}
+        let ordenedResults = [];
+        let bList = [];
+        for (var x=0;x<results.length;x++) {
+            if (bList.indexOf(results[x].cod_pedido) == -1) {
+                let pedido = {}
+                let cod_pedido = results[x].cod_pedido;
+                let produtos = results.filter((pedidos) => {
+                    return pedidos.cod_pedido == cod_pedido;
+                })
+                //console.log(cod_pedido,produtos);
+                pedido[cod_pedido] = produtos;
+                ordenedResults.push(produtos)
+                bList.push(cod_pedido);
+            }
+        }
+        console.log(ordenedResults)
+        res.render('entregador.html',{"userData":userInfo,"entregas":ordenedResults});
+
+    })
+    
 })
 
+router.get('/entregador/checkout',(req,res) => {
+    let user = new userData();
+    let userInfo = user.getJWtByCookie(req);
+    if (userInfo == false || userInfo == undefined) {res.redirect('/entregador/login');return(0);}
+    if (req.query.entrega == undefined) {res.redirect('/entregador');return(0);}
+    
+    let sql = "UPDATE `pedido` SET `atribuida` = '1', `cpfEntregador` = '"+userInfo.cpf+"' WHERE `cod_pedido` = "+req.query.entrega+";";
+    db.query(sql,(error,results)=>{
+        if (error) {throw error};
+        res.redirect('/entregador')
+    })
+})
+
+router.get('/entregador/meusPedidos',(req,res) => {
+    let user = new userData();
+    let userInfo = user.getJWtByCookie(req);
+    console.log("User data: ",userInfo)
+    if (userInfo == false || userInfo == undefined) {res.redirect('/entregador/login');return(0);}
+    let sql = "SELECT * FROM `pedido` WHERE `atribuida` = 1 AND `cpfEntregador` = '"+userInfo.cpf+"'";
+    db.query(sql,(error,results) => {
+        if (error) {throw error}
+        res.render('meusPedidos.html',{"userData":userInfo,"pedidos":results})
+    })
+})
 module.exports = router;
