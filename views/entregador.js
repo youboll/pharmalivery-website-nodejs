@@ -19,7 +19,7 @@ router.post('/entregador/login/', (req,res) => {
         const password = hash.sha512().update(req.body.password).digest('hex');
         
         let sql = "SELECT * FROM `entregador` WHERE `Cpf` = '"+username+"' AND `senha` = '"+password+"'"; 
-
+        console.log(sql)
         let query = db.query(sql, (err,results) => {
             if (err) {
                 throw err;
@@ -51,7 +51,7 @@ router.get('/entregador', (req,res) => {
     if (userInfo == false || userInfo == undefined) {res.redirect('/entregador/login');return(0);}
     let sql = "SELECT * FROM `pedido` INNER JOIN `remedios_pedido` ON remedios_pedido.cod_pedido = pedido.cod_pedido INNER JOIN remedios ON remedios.cod_remedio = remedios_pedido.cod_remedio WHERE pagamentoEfetuado = 1 AND entregaEfetuada = 0 AND atribuida=0;";
     db.query(sql,(error,results) => {
-        if (results.length == 0 ) {res.render('entregador.html',{})}
+        if (results.length == 0 ) {res.render('entregador.html',{});return(0)}
         let ordenedResults = [];
         let bList = [];
         for (var x=0;x<results.length;x++) {
@@ -95,6 +95,7 @@ router.get('/entregador/meusPedidos',(req,res) => {
     let sql = "SELECT * FROM `pedido` WHERE `atribuida` = 1 AND `cpfEntregador` = '"+userInfo.cpf+"'";
     db.query(sql,(error,results) => {
         if (error) {throw error}
+        console.log(results)
         res.render('meusPedidos.html',{"userData":userInfo,"pedidos":results})
     })
 })

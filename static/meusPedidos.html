@@ -4,7 +4,7 @@
         <title>Pharmalivery</title>
         <link rel="stylesheet" type="text/css" href="/header.css">
         <link rel="stylesheet" type="text/css" href="/index.css">
-
+        <link rel="stylesheet" href="/meusPedidos.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
     </head>
     <script>
@@ -87,8 +87,31 @@
         {% endif %}
             </div>
         </div>
-        {% for pedido in pedidos %}
-            {{pedido.cod_pedido}}
-        {% endfor %}
+        <table >
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>CPF Cliente</th>
+                <th>Valor</th>
+                <th>Entregue</th>
+                <th>Taxa frete</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+              <tr>
+                <td><a href="#">{{pedido.cod_pedido}}</a></td>
+                <td>{{pedido.cpf}}</td>
+                <td>{{pedido.preco}}</td>
+                <td>
+                    {% if pedido.entregaEfetuada == 0%} <p class="status status-unpaid">Pendente {% else %} <p class="status status-paid">Finalizada{% endif %}</p>
+                </td>
+                <td class="amount">{{pedido.frete}}</td>
+                <td><button>Entregar</button></td>
+              </tr>
+                
+                {% endfor %}
+            </tbody>
+          </table>
     </body>
 </html>
