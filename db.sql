@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 04-Nov-2021 às 18:54
+-- Generation Time: 19-Nov-2021 às 19:36
 -- Versão do servidor: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `entregador` (
   `bairro` varchar(40) NOT NULL,
   `estado` varchar(40) NOT NULL,
   `cep` varchar(40) NOT NULL,
-  `senha` varchar(64) NOT NULL
+  `senha` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `entregador` (
 
 INSERT INTO `entregador` (`nome`, `cpf`, `email`, `email2`, `telefone`, `logradouro`, `numero`, `cidade`, `bairro`, `estado`, `cep`, `senha`) VALUES
 ('PedroAdmin', '111.111.111-11', 'admin@admin.com', '', '(18) 5151-51515', 'Admin', '15', 'Bernardino', 'efef', 'AP', '18960-000', '16d4074e1a1f081538a09b801586da6881e547def93e643e4bac5195d9ef14ec'),
+('Admin', '222.222.222-22', 'admin@gmail.com', '', '(61) 2626-26262', 'RUa', 'numero', 'cidade', 'bairro', 'SP', '16216-262', '16d4074e1a1f081538a09b801586da6881e547def93e643e4bac5195d9ef14ecb45d636f34c7cd166408de6cb2ed987d3e53212e3ad12a597cac49e5b64197ab'),
 ('er', 'ere.r', 'er@etec.com', '', '(', 'erer', 'ererre', 'er', 'wdwd', 'AC', '-', 'd8b98a9504562ad66a');
 
 -- --------------------------------------------------------
@@ -146,7 +147,7 @@ INSERT INTO `loja` (`nome_fantasia`, `nota`, `cnpj`, `senha`, `insc_estadual`, `
 --
 
 CREATE TABLE IF NOT EXISTS `pedido` (
-  `cod_pedido` char(10) NOT NULL,
+`cod_pedido` int(10) NOT NULL,
   `data_pedido` varchar(20) DEFAULT NULL,
   `cpf` varchar(14) NOT NULL,
   `rua` varchar(50) NOT NULL,
@@ -157,16 +158,25 @@ CREATE TABLE IF NOT EXISTS `pedido` (
   `estado` varchar(30) NOT NULL,
   `latitude` varchar(100) NOT NULL,
   `longitude` varchar(100) NOT NULL,
-  `valor` char(10) DEFAULT NULL,
-  `autorizado` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `preco` double DEFAULT NULL,
+  `pagamentoEfetuado` tinyint(1) NOT NULL DEFAULT '0',
+  `entregaEfetuada` tinyint(1) NOT NULL DEFAULT '0',
+  `atribuida` tinyint(1) NOT NULL DEFAULT '0',
+  `cpfEntregador` varchar(14) NOT NULL,
+  `frete` double NOT NULL,
+  `precoTotal` double NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `pedido`
 --
 
-INSERT INTO `pedido` (`cod_pedido`, `data_pedido`, `cpf`, `rua`, `numero`, `bairro`, `cep`, `cidade`, `estado`, `latitude`, `longitude`, `valor`, `autorizado`) VALUES
-('cod_pedido', 'data_pedid', 'cpf', 'rua', 123, 'bairro', 'cep', 'cidade', 'estado', 'latitude', 'longitude', 'valor', 0);
+INSERT INTO `pedido` (`cod_pedido`, `data_pedido`, `cpf`, `rua`, `numero`, `bairro`, `cep`, `cidade`, `estado`, `latitude`, `longitude`, `preco`, `pagamentoEfetuado`, `entregaEfetuada`, `atribuida`, `cpfEntregador`, `frete`, `precoTotal`) VALUES
+(1, '2021-11-19 17:27:13', '111.111.111-11', 'Rua das cereijas', 206, 'Jardim Brasil IV', '18960000', 'Bernardino de c', 'SP', '-23.0587347', '-49.6206152', 24, 1, 0, 0, '', 3, 27),
+(2, 'data_pedid', 'cpf', 'rua', 123, 'bairro', 'cep', 'cidade', 'estado', 'latitude', 'longitude', 0, 0, 0, 0, '', 0, 0),
+(3, '2021-11-19 17:31:14', '111.111.111-11', 'Rua teste', 16, 'Bairro teste', 'Cep teste', 'Cidade teste', 'SP', '-23.0587347', '-49.6206152', 24, 1, 0, 0, '', 3, 27),
+(4, '2021-11-19 17:46:02', '111.111.111-11', 'Teste', 20111, 'Bairro', '223', 'cidade', 'AC', '-23.0587347', '-49.6206152', 24, 1, 0, 0, '', 3, 27),
+(5, '2021-11-19 17:48:49', '111.111.111-11', 'Teste', 3, 'Bairro', '223', 'cidade', 'AC', '-23.0587347', '-49.6206152', 0, 1, 0, 1, '222.222.222-22', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -228,10 +238,19 @@ INSERT INTO `remedios` (`farmacia`, `cod_remedio`, `valor`, `valorFrete`, `nome`
 --
 
 CREATE TABLE IF NOT EXISTS `remedios_pedido` (
-  `codproduto_estoque` char(10) NOT NULL,
+  `quantidade` int(11) NOT NULL DEFAULT '1',
+`codproduto_estoque` int(11) NOT NULL,
   `cod_remedio` char(10) DEFAULT NULL,
   `cod_pedido` char(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `remedios_pedido`
+--
+
+INSERT INTO `remedios_pedido` (`quantidade`, `codproduto_estoque`, `cod_remedio`, `cod_pedido`) VALUES
+(2, 2, '10', '4'),
+(1, 3, '47', '5');
 
 --
 -- Indexes for dumped tables
@@ -307,10 +326,20 @@ ALTER TABLE `remedios_pedido`
 ALTER TABLE `foto_produto`
 MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
+-- AUTO_INCREMENT for table `pedido`
+--
+ALTER TABLE `pedido`
+MODIFY `cod_pedido` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT for table `remedios`
 --
 ALTER TABLE `remedios`
 MODIFY `cod_remedio` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
+--
+-- AUTO_INCREMENT for table `remedios_pedido`
+--
+ALTER TABLE `remedios_pedido`
+MODIFY `codproduto_estoque` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
