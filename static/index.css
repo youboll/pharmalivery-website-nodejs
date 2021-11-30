@@ -42,9 +42,11 @@ img {
 
 /*===== CARD =====*/
 .container {
-  height: 100vh;
+  height: 50vh;
   display: flex;
+  background-color: var(--dark-color-lighten);
   margin-left: 1%;
+  height: fit-content;
 }
 
 .card {
@@ -134,4 +136,14 @@ img {
 .card:hover .card__button {
   transition-delay: .2s;
   opacity: 1;
+}
+
+.linkcolor {
+  color: white;
+
+}
+
+.linkcolor:hover {
+  color: lightgray;
+  
 }
