@@ -44,7 +44,6 @@ img {
 .container {
   height: 100vh;
   display: flex;
-  background-color: var(--dark-color-lighten);
   margin-left: 1%;
 }
 

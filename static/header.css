@@ -19,6 +19,7 @@ body{
     border-radius: 40px;
     height: 40px;
     width: 90%;
+    padding-left: 10px;
 }
 #searchIcon{
     color: white;

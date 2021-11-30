@@ -99,4 +99,26 @@ router.get('/entregador/meusPedidos',(req,res) => {
         res.render('meusPedidos.html',{"userData":userInfo,"pedidos":results})
     })
 })
+router.get('/entregador/pedido/:cod_pedido',(req,res) => {
+    if (req.params.cod_pedido == undefined) {res.redirect('/entregador');return(0)}
+    let user = new userData();
+    let userInfo = user.getJWtByCookie(req);
+    console.log("User data: ",userInfo)
+    if (userInfo == false || userInfo == undefined) {res.redirect('/entregador/login');return(0);}
+
+    let sql = "SELECT * FROM `pedido` WHERE `atribuida` = 1 AND `cod_pedido` = "+req.params.cod_pedido+"  AND `cpfEntregador` = '"+userInfo.cpf+"'";
+    db.query(sql, (error,results) => {
+        if (error) {
+            throw error;
+        }
+        if (results[0] == undefined) {
+            res.redirect('/entregador');
+        } else {
+            res.render('dadosPedido.html',{"pedido":results[0],"userData":userInfo})
+        }
+        
+    })
+
+})
+router.get('')
 module.exports = router;
