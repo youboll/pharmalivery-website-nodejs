@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="/index.css">
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
+        <link rel="stylesheet" href="/produto.css">
     </head>
     <script>
         function menuToggle () {
@@ -64,36 +65,26 @@
         {% endif %}
             </div>
         </div>
-    
-        Nome:{{produto.nome}}<br>
-        Codigo: {{produto.cod_remedio}}<br>
-        Laboratório: {{produto.laboratorio}}<br>
-        Tipo: {{produto.tipo}}<br>
-        Quantidade por embalagem: {{produto.qtdade_unidade}}<br> 
-        Descrição: {{produto.desc}}          
-        <a><button>Comprar</button></a> <br>
-        <form method="GET" action="/addCarrinho/{{produto.cod_remedio}}">
-            Quantidade: <input type="number" name="quantidade" value="1">
-            <a href="/addCarrinho/{{produto.cod_remedio}}"><button>Adicionar ao carrinho</button></a><br>
-        </form>
-        {% if produto.foto1 != "null" %}
-        <img width="500" height="300" src="{{produto.foto1}}">
-        {% else %}
-        <img src="/fotos/caixa.png" alt="Imagem remedio padrão">
-        {% endif %}
+        <div class="productData">
+            <h2>{{produto.nome}}</h2><br>
+            <div class="productPreco">R${{produto.valor}}</div>
+            Tipo: {{produto.tipo}}<br>
+            Quantidade por embalagem: {{produto.qtdade_unidade}}<br> 
+            Descrição: {{produto.desc}}<br>
+            Laboratório: {{produto.laboratorio}}
+            <a><button class="btnCompra">Comprar</button></a> <br>
+            <form method="GET" action="/addCarrinho/{{produto.cod_remedio}}">
+                Quantidade: <input type="number" name="quantidade" value="1">
+                <a href="/addCarrinho/{{produto.cod_remedio}}"><button class="buttonQtd">Adicionar ao carrinho</button></a><br>
+            </form>
+        </div>
+            {% if produto.foto1 != "null" %}
+            <img class="productImg" width="500" height="300" src="{{produto.foto1}}">
+            {% else %}
+            <img src="/fotos/caixa.png" alt="Imagem remedio padrão">
+            {% endif %}
 
-        {% if produto.foto2 != "null" %}
-        <img width="500" height="300" src="{{produto.foto2}}">
-        {% else %}
-        <img src="/fotos/caixa.png" alt="Imagem remedio padrão">
-        {% endif %}
-
-        {% if produto.foto3 != "null" %}
-        <img width="500" height="300" src="{{produto.foto3}}">
-        {% else %}
-        <img src="/fotos/caixa.png" alt="Imagem remedio padrão">
-        {% endif %}
-
+        
     </body>
     
 </html>
