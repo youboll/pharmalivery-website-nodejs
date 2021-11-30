@@ -1,0 +1,18 @@
+.pedidosData{
+    background-color: #3ea699;
+padding: 20px;
+width: 32%;
+position: absolute;
+left: 17%;
+top: 31%;
+height: 40%;
+}
+#map{
+    position: absolute;
+    width: 32%;
+    height: 40%;
+    overflow: hidden;
+    top: 31%;
+    left: 49%;
+    
+}
