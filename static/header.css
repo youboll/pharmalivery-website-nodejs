@@ -5,9 +5,8 @@ body{
     padding:0;
 }
 #header{
-    background-color: #292929;
+    background-color: #a0d2cc;
     display: flex;
-    align-content: center;
 }
 #userData{
     color:white;
@@ -20,6 +19,7 @@ body{
     border-radius: 40px;
     height: 40px;
     width: 90%;
+    padding-left: 10px;
 }
 #searchIcon{
     color: white;
@@ -50,10 +50,7 @@ body{
 }
 
 img{
-    margin-left: 10px;
-    margin-top: 2px;
-    height: 200;
-    width: 147;
+    width: 10%;
 }
 *{
     margin: 0;
@@ -133,8 +130,4 @@ img{
 }
 .action .menu ul li:hover a {
     color:#555;
-}
-
-#logg{
-    margin-top: -10px ;
 }

@@ -5,6 +5,7 @@
         <link rel="stylesheet" type="text/css" href="/header.css">
         <link rel="stylesheet" type="text/css" href="/index.css">
         <link rel="stylesheet" href="/meusPedidos.css">
+        <link rel="stylesheet" href="/entregador.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
     </head>
     <script>
@@ -19,7 +20,7 @@
             <img src="/logo.png" onclick="window.location.replace('/');" style="cursor: pointer;">
             <div id="search-box">
                 <form action="/pesquisa" id="formPesquisa">
-                    <input type="text" name="searchQuery" placeholder="  O que você está buscando?">
+                    <input type="text" name="searchQuery"placeholder="O que você está buscando?">
                     <a id="searchIcon" onClick="document.getElementById('formPesquisa').submit()">
                     <i class="fas fa-search" ></i>
                     </a>
@@ -80,11 +81,8 @@
                         </div>
                     </div>
                 {% else %}
-                <div id="logg">
-                    <a class="linkcolor" href="/user/Login/" >Login</a>
-                    <a> | </a>
-                    <a class="linkcolor" href="/cadastro">Cadastrar</a>
-                </div>
+                <a href="/user/Login/" ><button class="btn-login">Login</button></a>
+                <a href="/cadastro"><button class="btn-login">Cadastrar</button></a>
             
         
         {% endif %}
@@ -103,14 +101,14 @@
             <tbody>
                 {% for pedido in pedidos %}
               <tr>
-                <td><a href="#">{{pedido.cod_pedido}}</a></td>
+                <td><a href="/entregador/pedido/{{pedido.cod_pedido}}">{{pedido.cod_pedido}}</a></td>
                 <td>{{pedido.cpf}}</td>
                 <td>{{pedido.preco}}</td>
                 <td>
-                    {% if pedido.entregaEfetuada == 0%} <p class="status status-unpaid">Pendente {% else %} <p class="status status-paid">Finalizada{% endif %}</p>
+                    {% if pedido.EntregaEfetuada == 1%} <p class="status status-paid">Finalizada {% else %} <p class="status status-unpaid">Pendente  {% endif %}</p>
                 </td>
                 <td class="amount">{{pedido.frete}}</td>
-                <td><button>Entregar</button></td>
+                <td><a href="/entregador/checkout?entrega={{pedido.cod_pedido}}"><button>Entregar</button></a></td>
               </tr>
                 
                 {% endfor %}

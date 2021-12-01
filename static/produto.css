@@ -9,9 +9,9 @@
     font-size: 134%;
 }
 .productImg{
-    width: 20%;
+    width: 30%;
     margin-top: 1%;
-    margin-left: 16%;
+    margin-left: 9%;
 }
 .productData input {
     width: 8%;
@@ -33,9 +33,4 @@
     border: 5px solid transparent;
     cursor: pointer;
     margin-left: 6%;
-}
-.descricao{
-    background-color: #c1c6c6;
-border-radius: 25px 25px 0 0;
-padding: 10px;
 }
