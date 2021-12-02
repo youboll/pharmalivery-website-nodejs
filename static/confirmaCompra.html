@@ -1,14 +1,107 @@
 <html>
     <head>
+        <!-- Pegar Icon de remédio ou fazer-->
         <title>Pharmalivery</title>
+        <link rel="stylesheet" type="text/css" href="/header.css">
+        <link rel="stylesheet" type="text/css" href="/index.css">
+        <link rel="stylesheet" href="/confirmaCompra.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
+        <link rel="stylesheet" href="/footer.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     </head>
+    <script>
+        function menuToggle () {
+            const toggleMenu = document.querySelector('.menu');
+            toggleMenu.classList.toggle('active')
+        }
+
+        function formatar(mascara, documento){
+          var i = documento.value.length;
+          var saida = mascara.substring(0,1);
+          var texto = mascara.substring(i)
+          
+          if (texto.substring(0,1) != saida){
+                    documento.value += texto.substring(0,1);
+          }
+          
+        }
+    </script>
+    
     <body>
+        <div id="header">
+            <img src="/logo.png" onclick="window.location.replace('/');" style="cursor: pointer;">
+            <div id="search-box">
+                <form action="/pesquisa" id="formPesquisa">
+                    <input type="text" name="searchQuery" placeholder="O que você está buscando?">
+                    <a id="searchIcon" onClick="document.getElementById('formPesquisa').submit()">
+                    <i class="fas fa-search" ></i>
+                    </a>
+                </form>
+            </div>
+            <div id="userData">
+                {% if userData and userData.type == 'usuario' %}
+                <div class="action">
+                    <div class="profile">
+                        <ion-icon name="contact"></ion-icon>
+                        <img src="/user.png" onclick="menuToggle()">
+                    </div>
+                    <div class="menu">
+                        <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
+                        <ul>
+                            <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                {% elif userData and userData.type == 'entregador'%}
+                <div class="action">
+                    <div class="profile">
+                        <ion-icon name="contact"></ion-icon>
+                        <img src="/user.png" onclick="menuToggle()">
+                    </div>
+                    <div class="menu">
+                        <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
+                        <ul>
+                            <li><img src="user.png"><a href="/carrinho">Carrinho de compras</a></li>
+                            <li><img src="edit.png"><a href="/entregador/painel">Painel de entregadas</a></li>
+                            <li><img src="envelope.png"><a href="#">Inbox</a></li>
+                            <li><img src="settings.png"><a href="#">Configurações da conta</a></li>
+                            <li><img src="question.png"><a href="#">Help</a></li>
+                            <li><img src="log-out.png"><a href="/logout?destination=/">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                {% elif userData and userData.type == 'loja'%}
+                    
+                    <div class="action">
+                        <div class="profile">
+                            <ion-icon name="contact"></ion-icon>
+                            <img src="/user.png" onclick="menuToggle()">
+                        </div>
+                        <div class="menu">
+                            <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
+                            <ul>
+                                <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
+                                <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+    
+                            </ul>
+                        </div>
+                    </div>            
+        
+        {% endif %}
+            </div>
+        </div>
         <form action="/compra/registraPedido/" method="POST" id="form">
             <h1>Endereço</h1><br>
-            <input type="text" name="rua" placeholder="Logadouro"> <input type="number" name="numero" placeholder="Nº" ><br>
-            <input type="text" name="cep" placeholder="CEP"><br>
-            <input type="text" name="bairro" placeholder="Bairro"><br>
-            <input type="text" name="cidade" placeholder="Cidade"><br>
+            <input id="cep" type="text" name="cep" placeholder="CEP" required/><br>
+            <input id="logradouro" type="text" name="logradouro" placeholder="Rua" required/> <input id="numero" type="text" name="numero" placeholder="Numero"/><br>
+            <input type="text" id="bairro" name="bairro" placeholder="Bairro"required/><br>
+            <input type="text" id="cidade" name="cidade" placeholder="Cidade"required/><br><br>
             <select id="uf" name="estado">
                 <option value="AC">Acre</option>
                 <option value="AL">Alagoas</option>
@@ -38,10 +131,14 @@
                 <option value="SE">Sergipe</option>
                 <option value="TO">Tocantins</option>
             </select><br>
-            Total: {{valor}} Frete: {{frete}}
+            <div class="dadosCompra">
+            <strong>Total:</strong>R$ {{valor}} <strong>Frete:</strong>R$ {{frete}}<br>
             <button type="submit">Confirmar compra</button>
+            </div>
         </form>
+
         <script>
+            //Pega latitude e longitude
             var options = {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -65,6 +162,68 @@
 
             navigator.geolocation.getCurrentPosition(success, error, options);
 
+            //Pega cidade apartir do CEP
+            $("#cep").focusout(function(){
+            //Início do Comando AJAX
+            $.ajax({
+                //O campo URL diz o caminho de onde virá os dados
+                //É importante concatenar o valor digitado no CEP
+                url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/unicode/',
+                //Aqui você deve preencher o tipo de dados que será lido,
+                //no caso, estamos lendo JSON.
+                dataType: 'json',
+                //SUCESS é referente a função que será executada caso
+                //ele consiga ler a fonte de dados com sucesso.
+                //O parâmetro dentro da função se refere ao nome da variável
+                //que você vai dar para ler esse objeto.
+                success: function(resposta){
+                    //Agora basta definir os valores que você deseja preencher
+                    //automaticamente nos campos acima.
+                    $("#cidade").val(resposta.localidade);
+                    $("#logradouro").val(resposta.logradouro);
+                    $("#complemento").val(resposta.complemento);
+                    $("#bairro").val(resposta.bairro);
+                    $("#cidade").val(resposta.localidade);
+                    $("#uf").val(resposta.uf);
+                    //Vamos incluir para que o Número seja focado automaticamente
+                    //melhorando a experiência do usuário
+                    $("#numero").focus();
+                }
+            });
+        });
         </script>
+
+  <footer class="footer">
+    <div class="footer-container">
+        <div class="row">
+            <div class="footer-col">
+                        <h4>Pharmalivery</h4>
+                        <ul>
+                            <li><a href="/">Página inicial</a></li>
+                            <li><a href="/sobre">Sobre Nós</a></li>
+                            <li><a href="/contato">Contato</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Serviços</h4>
+                        <ul>
+                            <li><a href="/entregador">Para entregadores</a></li>
+                            <li><a href="/loja/Login">Para lojas</a></li>
+                        </ul>
+                    </div>
+            <div class="footer-col">
+                <h4>Siga-nos</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
     </body>
+    
 </html>
+

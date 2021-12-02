@@ -9,7 +9,7 @@
     font-size: 134%;
 }
 .productImg{
-    width: 30%;
+    width: 26%;
     margin-top: 1%;
     margin-left: 9%;
 }
@@ -33,4 +33,9 @@
     border: 5px solid transparent;
     cursor: pointer;
     margin-left: 6%;
+}
+.descricao{
+    background-color: #9f9f9f;
+padding: 2%;
+border-radius: 25px 25px 0px 0px;
 }

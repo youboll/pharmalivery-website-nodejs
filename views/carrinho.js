@@ -18,7 +18,7 @@ router.get('/carrinho',(req,res) => {
     
     let cartData =(cart!= false)? JWT.verify(cookies['cart'],require('../index.js').JWTPrivateKey) : undefined;
     let alert = (req.query.alert != undefined)? req.query.alert : undefined;
-    res.render('carrinho.html',{"cartData":cartData,"alert": alert})
+    res.render('carrinho.html',{"cartData":cartData,"userData":userInfo,"alert": alert})
 })
 
 router.get('/carrinho/entrega', (req,res) => {

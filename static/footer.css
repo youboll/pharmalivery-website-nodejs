@@ -12,6 +12,7 @@ body{
 	max-width: 1170px;
     background-color: #22625e;
 	margin:auto;
+	height: 45%;
 }
 .row{
 	display: flex;
@@ -23,7 +24,10 @@ ul{
 .footer{
     background-color: #22625e;
 	padding: 70px 0;
-	margin-top: 4%;
+	position: relative;
+	bottom: 0;
+	height: 45%;
+	width: 100%;
 }
 .footer-col{
    width: 25%;

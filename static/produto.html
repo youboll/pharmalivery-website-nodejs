@@ -62,6 +62,9 @@
                             </ul>
                         </div>
                     </div>
+                    {% else %}
+                    <a href="/user/Login/" ><button class="btn-login">Login</button></a>
+                    <a href="/cadastro"><button class="btn-login">Cadastrar</button></a>
         {% endif %}
             </div>
         </div>
@@ -72,7 +75,6 @@
             <div class="productPreco">R${{produto.valor}}</div>
             Tipo: {{produto.tipo}}<br>
             Quantidade por embalagem: {{produto.qtdade_unidade}}<br> 
-            Descrição: {{produto.desc}}<br>
             Laboratório: {{produto.laboratorio}}
             <a><button class="btnCompra">Comprar</button></a> <br>
             <form method="GET" action="/addCarrinho/{{produto.cod_remedio}}">
@@ -86,7 +88,10 @@
             <img src="/fotos/caixa.png" alt="Imagem remedio padrão">
             {% endif %}
 
-        
+        <div class="descricao">
+            <h3>Descrição: </h3><br>
+            {{produto.desc}}
+        </div>
 
     </body>
     
@@ -109,7 +114,7 @@
                         </ul>
                     </div>
             <div class="footer-col">
-                <h4>follow us</h4>
+                <h4>Siga-nos</h4>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>

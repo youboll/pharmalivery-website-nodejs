@@ -54,6 +54,7 @@ img {
   padding: 4rem 2rem 0;
   color: var(--white-color);
   overflow-y: hidden;
+  margin-bottom: 11%;
 }
 
 .card__img {
@@ -134,3 +135,13 @@ img {
   transition-delay: .2s;
   opacity: 1;
 }
+
+.linkcolor {
+  color: white;
+
+}
+
+.linkcolor:hover {
+  color: lightgray;
+
+} 

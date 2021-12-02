@@ -1,17 +1,124 @@
 <html>
     <head>
+        <!-- Pegar Icon de remédio ou fazer-->
         <title>Pharmalivery</title>
+        <link rel="stylesheet" type="text/css" href="/header.css">
+        <link rel="stylesheet" type="text/css" href="/index.css">
+        <link rel="stylesheet" href="/carrinho.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
         <link rel="stylesheet" href="/footer.css">
     </head>
+    <script>
+        function menuToggle () {
+            const toggleMenu = document.querySelector('.menu');
+            toggleMenu.classList.toggle('active')
+        }
+    </script>
+    
     <body>
-        {{alert}}<br>
-        {{error}}
-        {% for produto in cartData.produtos%}
-            Nome: {{produto.nome}} Quantidade: {{produto.quantidade}} Laboratório: {{produto.laboratorio}} Descrição: {{produto.desc}}
-            <a href="/removeCarrinho/{{produto.cod_remedio}}"><button>Remover</button></a>
-            <br>
-        {% endfor %}
-        <a href="/compra/confirmaCompra"><button>Continuar compra</button></a>
+        <div id="header">
+            <img src="/logo.png" onclick="window.location.replace('/');" style="cursor: pointer;">
+            <div id="search-box">
+                <form action="/pesquisa" id="formPesquisa">
+                    <input type="text" name="searchQuery" placeholder="O que você está buscando?">
+                    <a id="searchIcon" onClick="document.getElementById('formPesquisa').submit()">
+                    <i class="fas fa-search" ></i>
+                    </a>
+                </form>
+            </div>
+            <div id="userData">
+                {% if userData and userData.type == 'usuario' %}
+                <div class="action">
+                    <div class="profile">
+                        <ion-icon name="contact"></ion-icon>
+                        <img src="/user.png" onclick="menuToggle()">
+                    </div>
+                    <div class="menu">
+                        <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
+                        <ul>
+                            <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                {% elif userData and userData.type == 'entregador'%}
+                <div class="action">
+                    <div class="profile">
+                        <ion-icon name="contact"></ion-icon>
+                        <img src="/user.png" onclick="menuToggle()">
+                    </div>
+                    <div class="menu">
+                        <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
+                        <ul>
+                            <li><img src="user.png"><a href="/carrinho">Carrinho de compras</a></li>
+                            <li><img src="edit.png"><a href="/entregador/painel">Painel de entregadas</a></li>
+                            <li><img src="envelope.png"><a href="#">Inbox</a></li>
+                            <li><img src="settings.png"><a href="#">Configurações da conta</a></li>
+                            <li><img src="question.png"><a href="#">Help</a></li>
+                            <li><img src="log-out.png"><a href="/logout?destination=/">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                {% elif userData and userData.type == 'loja'%}
+                    
+                    <div class="action">
+                        <div class="profile">
+                            <ion-icon name="contact"></ion-icon>
+                            <img src="/user.png" onclick="menuToggle()">
+                        </div>
+                        <div class="menu">
+                            <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
+                            <ul>
+                                <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
+                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
+                                <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
+    
+                            </ul>
+                        </div>
+                    </div>           
+        
+        {% endif %}
+            </div>
+        </div>
+        <!-- Produtos -->
+        <div class="shopping-cart">
+            <div class="title">
+                Meus pedidos
+            </div>
+            {% for produto in cartData.produtos%}
+                <br>
+
+
+                
+                <!--Produto 1-->
+                <div class="item">
+                    
+                    <a href="/removeCarrinho/{{produto.cod_remedio}}"><img src="/remove.png" alt="" class="delete-btn"></a>
+    
+                        {% if foto1 != 'null' %}
+                            <img class="product-img" src="{{produto.foto1}}" alt="Foto produto">
+                        {% else %}
+                            <img class="product-img" src="/fotos/245Figura-Caixa-de-Remedio-PNG.png" alt=""> 
+                        {% endif %}
+                    <div class="description">
+                        <span>{{produto.nome}}</span>
+                        <span>Tipo: {{produto.tipo}}</span>
+                    </div>
+                    <div class="quantity">
+                        <input type="text" value="{{produto.quantidade}}" readonly>
+                    </div>
+                    <div class="total-price">R${{produto.valor * produto.quantidade}}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="/compra/confirmaCompra"><button class="confirmaButton">Continuar compra</button></a>
+
+
+
         <footer class="footer">
             <div class="footer-container">
                 <div class="row">
@@ -31,7 +138,7 @@
                         </ul>
                     </div>
                     <div class="footer-col">
-                        <h4>follow us</h4>
+                        <h4>Siga-nos</h4>
                         <div class="social-links">
                             <a href="#"><i class="fab fa-facebook-f"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>

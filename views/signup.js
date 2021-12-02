@@ -35,7 +35,7 @@ router.post('/signup/', (req,res) => {
 
         case 'usuario':
 
-            let wantedUserData = ['username','cpf','email','email2','telefone','logradouro','numero','cidade','bairro','estado','senha','senha2'];
+            let wantedUserData = ['username','cpf','email','telefone','logradouro','CEP','Numero','Cidade','Complemento','Bairro','estado','senha','senha2'];
             let checkData = check_req(wantedUserData,req); 
 
             
