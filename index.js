@@ -21,7 +21,7 @@ app.use(express.static('static'))
 require('dotenv').config();
 //Busca pelo arquivo .env e senhas sensiveis
 
-app.listen(4000, () => {
+app.listen(80, () => {
     console.log('Servidor iniciado na porta 4000');
 })
 console.log("SENHA JWT:"+process.env.JWTPrivateKey)
