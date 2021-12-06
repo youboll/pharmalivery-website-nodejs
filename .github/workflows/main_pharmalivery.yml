@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'pharmalivery'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DAEE5ED0F85240678964FBD699646837 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CD83B42FE4F8400EA413DBB5C2D8F73C }}
           package: .
