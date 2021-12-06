@@ -5,6 +5,10 @@ const userData = require('./user.js').userJWT;
 const db = require('../db.js');
 const JWT = require('jsonwebtoken');
 router.get('/compra/confirmaCompra', (req,res) => {
+    let user = new userData();
+    let userInfo = user.getJWtByCookie(req);
+    console.log("Usuario ",userInfo)
+    if (userInfo == false || userInfo == undefined) {res.redirect('/carrinho');return(0);}
     let cart = new carrinho(req).getData();
     if (cart == false) {res.redirect('/');return(0);}
     let frete = 0;
@@ -16,7 +20,7 @@ router.get('/compra/confirmaCompra', (req,res) => {
     cart.valor = {"precoProdutos":valor,"frete":frete,"total":valor+frete};
     let cartToken = JWT.sign(cart,require('../index.js').JWTPrivateKey);
     res.cookie('cart',cartToken)
-    res.render('confirmaCompra.html',{"valor":valor,"frete":frete})
+    res.render('confirmaCompra.html',{"valor":valor.toFixed(2),"frete":frete.toFixed(2),"userData":userInfo})
 })
 
 router.post('/compra/registraPedido',async (req,res) => {

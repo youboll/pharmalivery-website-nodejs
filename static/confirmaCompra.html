@@ -49,7 +49,7 @@
                         <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
                         <ul>
                             <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            
                             <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
 
                         </ul>
@@ -85,7 +85,7 @@
                             <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
                             <ul>
                                 <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                
                                 <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
                                 <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
     
@@ -98,8 +98,8 @@
         </div>
         <form action="/compra/registraPedido/" method="POST" id="form">
             <h1>Endereço</h1><br>
-            <input id="cep" type="text" name="cep" placeholder="CEP" required/><br>
-            <input id="logradouro" type="text" name="logradouro" placeholder="Rua" required/> <input id="numero" type="text" name="numero" placeholder="Numero"/><br>
+            <input id="cep" type="text" name="cep" placeholder="CEP" OnKeyPress="formatar('#####-###', this)" maxlength="9" required/><br>
+            <input id="logradouro" type="text" name="rua" placeholder="Rua" required/> <input id="numero" type="text" name="numero" placeholder="Numero"/><br>
             <input type="text" id="bairro" name="bairro" placeholder="Bairro"required/><br>
             <input type="text" id="cidade" name="cidade" placeholder="Cidade"required/><br><br>
             <select id="uf" name="estado">
@@ -131,6 +131,9 @@
                 <option value="SE">Sergipe</option>
                 <option value="TO">Tocantins</option>
             </select><br>
+            <div id="coordenadas">
+
+            </div>
             <div class="dadosCompra">
             <strong>Total:</strong>R$ {{valor}} <strong>Frete:</strong>R$ {{frete}}<br>
             <button type="submit">Confirmar compra</button>
@@ -152,7 +155,7 @@
             console.log('Latitude : ' + crd.latitude);
             console.log('Longitude: ' + crd.longitude);
             console.log('Mais ou menos ' + crd.accuracy + ' metros.');
-            let formDiv = document.getElementById('form');
+            let formDiv = document.getElementById('coordenadas');
             formDiv.innerHTML = formDiv.innerHTML+'<input type="hidden" name="latitude" value="'+crd.latitude+'">'+'<input type="hidden" name="longitude" value="'+crd.longitude+'">';
             };
 

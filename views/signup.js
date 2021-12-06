@@ -8,7 +8,7 @@ router.use(express.urlencoded({ extended: false}));
 router.post('/signup/', (req,res) => {
     switch(req.body.type) {
         case 'loja':
-            var wantedData = ['nome_fantasia', 'cnpj', 'insc_estadual', 'email','email2', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'telefone', 'celular','senha','senha2'];
+            var wantedData = ['nome_fantasia', 'cnpj', 'insc_estadual', 'email', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'telefone', 'celular','senha','senha2'];
             let senha = hash.sha512().update(req.body.senha).digest('hex');
             
             
@@ -45,7 +45,6 @@ router.post('/signup/', (req,res) => {
             
             if (checkData == false) {res.code = 401;res.render('cadastro.html',{error:"Dados Vazios"});return(0)}
             // *TODO: Trocar todo res.send para res.render bobalhão
-            if (req.body.email != req.body.email2) {res.statusCode = 401;res.render('cadastro.html',{error:"<strong>Email</strong> não correspondente"});return(0)}
             if (req.body.senha != req.body.senha2) {res.statuscode = 401;res.render('cadastro.html',{error:"<strong>Senha</strong> não correspondente"});return(0)}
             if (8 > req.body.senha.length || req.body.senha.length > 16) {res.statuscode = 401;res.render('cadastro.html',{error:"A <strong>Senha</strong> deve ser maior que 8 e menor de 16 caracteres"});return(0)}
             var username = req.body.username; 
@@ -55,8 +54,8 @@ router.post('/signup/', (req,res) => {
             var phone_num = req.body.telefone; 
             var logradouro = req.body.logradouro;
             var numero = req.body.numero;
-            var cidade = req.body.cidade;
-            var bairro = req.body.bairro;
+            var cidade = req.body.Cidade;
+            var bairro = req.body.Bairro;
             var estado = req.body.estado;
 
             let query = "INSERT INTO `cliente` (`Cpf`, `Logradouro`, `Nome`, `Email` , `cidade`, `bairro`, `estado`, `celular`, `senha`) VALUES ('"+cpf+"', '"+logradouro+"', '"+username+"', '"+email+"',  '"+cidade+"', '"+bairro+"', '"+estado+"', '"+phone_num+"', '"+password+"');";

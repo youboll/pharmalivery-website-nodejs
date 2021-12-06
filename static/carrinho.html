@@ -37,7 +37,7 @@
                         <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
                         <ul>
                             <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            
                             <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
 
                         </ul>
@@ -54,9 +54,6 @@
                         <ul>
                             <li><img src="user.png"><a href="/carrinho">Carrinho de compras</a></li>
                             <li><img src="edit.png"><a href="/entregador/painel">Painel de entregadas</a></li>
-                            <li><img src="envelope.png"><a href="#">Inbox</a></li>
-                            <li><img src="settings.png"><a href="#">Configurações da conta</a></li>
-                            <li><img src="question.png"><a href="#">Help</a></li>
                             <li><img src="log-out.png"><a href="/logout?destination=/">Logout</a></li>
 
                         </ul>
@@ -73,7 +70,7 @@
                             <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
                             <ul>
                                 <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                
                                 <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
                                 <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
     
@@ -99,7 +96,7 @@
                     
                     <a href="/removeCarrinho/{{produto.cod_remedio}}"><img src="/remove.png" alt="" class="delete-btn"></a>
     
-                        {% if foto1 != 'null' %}
+                    {% if produto.foto1 != "null" %}
                             <img class="product-img" src="{{produto.foto1}}" alt="Foto produto">
                         {% else %}
                             <img class="product-img" src="/fotos/245Figura-Caixa-de-Remedio-PNG.png" alt=""> 
@@ -111,7 +108,7 @@
                     <div class="quantity">
                         <input type="text" value="{{produto.quantidade}}" readonly>
                     </div>
-                    <div class="total-price">R${{produto.valor * produto.quantidade}}</div>
+                    <div class="total-price">R${{(produto.valor * produto.quantidade).toFixed(2)}}</div>
                 </div>
             {% endfor %}
         </div>

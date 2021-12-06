@@ -37,7 +37,7 @@
                         <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
                         <ul>
                             <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            
                             <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
 
                         </ul>
@@ -55,7 +55,7 @@
                             <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
                             <ul>
                                 <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                
                                 <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
                                 <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
     
@@ -85,7 +85,7 @@
             {% if produto.foto1 != "null" %}
             <img class="productImg" width="500" height="300" src="{{produto.foto1}}">
             {% else %}
-            <img src="/fotos/caixa.png" alt="Imagem remedio padrão">
+            <img src="/fotos/245Figura-Caixa-de-Remedio-PNG.png" class="productImg" width="500" height="300" alt="Imagem remedio padrão">
             {% endif %}
 
         <div class="descricao">

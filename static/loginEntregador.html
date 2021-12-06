@@ -1,9 +1,9 @@
 <html>
     <head>
-
-        <title>Login - Index-Pharmalivery</title>
+        <title>Pharmalivery</title>
     </head>
-    <link rel="icon" href="icon.png" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="/login.css"> 
+    
     <script>
         
         function formatar(mascara, documento){
@@ -18,19 +18,19 @@
         }
     </script>
     <body>
-        {% if error%}
-            {{error | safe}}
-        {% endif %}
-        <form method="POST" action="/entregador/login/">
+        
+        <form class="box" method="POST" action="/entregador/login/">
+            {% if error%}
+            <div id="error" style="color:red;background: none;">{{error | safe}}</div>
+            {% endif %}
             <input type="text" name="username" maxlength="14" OnKeyPress="formatar('###.###.###-##', this)" placeholder="Digite seu cpf"><br>
 
             <input type="password" name="password" placeholder="Digite sua senha">
             <input type="hidden" name="destination" value="/">
-            <button type="submit">Login</button>
-            
+            <input type="submit" name="" value="Login">
+            <a href="/"><button type="button">Index</button></a>
+        <a href="/loja/Login"><button type="button">Entrar como loja</button></a>
         </form><br>
-        <a href="/"><button>Index</button></a>
-        <a href="/loja/Login"><button>Entrar como loja</button></a>
-
+        
     </body>
 </html>

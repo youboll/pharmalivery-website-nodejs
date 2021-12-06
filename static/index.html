@@ -37,7 +37,7 @@
                         <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
                         <ul>
                             <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            
                             <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
 
                         </ul>
@@ -73,7 +73,7 @@
                             <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
                             <ul>
                                 <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                
                                 <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
                                 <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
     
@@ -93,24 +93,120 @@
         </div>
         <!-- Produtos-->
         <br>
-        <div class="produtos" style="display: flex;">
+        <!-- Lista de produtos -->
+        <h2>Destaques da semana</h2>
+        <div class="produtos" style="display: flex;overflow-x: auto;">
         {% for produto in produtos%}    
-        <div class="container"> 
-            <div class="card">
-                <img src="{{produto.foto1}}" alt="" class="card__img"> 
+            {% if produto.tipo == 'Generico' %}
+            <div class="container"> 
+                <div class="card">
+                    {% if produto.foto1 != "null" %}
+                        <img class="card__img" width="500" height="300" src="{{produto.foto1}}">
+                    {% else %}
+                        <img src="/fotos/245Figura-Caixa-de-Remedio-PNG.png" class="card__img" width="500" height="300" alt="Imagem remedio padrão">
+                    {% endif %} 
 
-                <!-- <div class="card__content">  -->
-                    <div class="card__data">
-                        <h1 class="card__title">{{produto.nome}}</h1>
-                        <span class="card__preci">R${{produto.valor}}</span>
-                        <p class="card__description">{{produto.desc}}</p>
-                        <a href="/produto/{{produto.cod_remedio}}" class="card__button">Adicionar ao carrinho</a>
-                    </div>
-                <!-- </div> -->
-            </div>
-        </div>   
+                    <!-- <div class="card__content">  -->
+                        <div class="card__data">
+                            <h1 class="card__title">{{produto.nome}}</h1>
+                            <span class="card__preci">R${{produto.valor}}</span>
+                            <p class="card__description">{{produto.desc}}</p>
+                            <a href="/produto/{{produto.cod_remedio}}" class="card__button">Adicionar ao carrinho</a>
+                        </div>
+                    <!-- </div> -->
+                </div>
+            </div>   
+            {% endif %}
         {% endfor %}
-    </div>
+        </div>
+        <h2>Dia a Dia</h2>
+        <div class="produtos" style="display: flex;overflow-x: auto;">
+        {% for produto in produtos%}    
+            {% if produto.tipo == 'dia a dia' %}
+                <div class="container"> 
+                    <div class="card">
+                        <img src="{{produto.foto1}}" alt="" class="card__img"> 
+
+                        <!-- <div class="card__content">  -->
+                            <div class="card__data">
+                                <h1 class="card__title">{{produto.nome}}</h1>
+                                <span class="card__preci">R${{produto.valor}}</span>
+                                <p class="card__description">{{produto.desc}}</p>
+                                <a href="/produto/{{produto.cod_remedio}}" class="card__button">Adicionar ao carrinho</a>
+                            </div>
+                        <!-- </div> -->
+                    </div>
+                </div>   
+            {% endif %}
+        {% endfor %}
+        </div>
+        <h2>Higiene e Beleza</h2>
+        <div class="produtos" style="display: flex;overflow-x: auto;">
+        {% for produto in produtos%}    
+            {% if produto.tipo == 'Higiene pessoal' %}
+                <div class="container"> 
+                    <div class="card">
+                        <img src="{{produto.foto1}}" alt="" class="card__img"> 
+
+                        <!-- <div class="card__content">  -->
+                            <div class="card__data">
+                                <h1 class="card__title">{{produto.nome}}</h1>
+                                <span class="card__preci">R${{produto.valor}}</span>
+                                <p class="card__description">{{produto.desc}}</p>
+                                <a href="/produto/{{produto.cod_remedio}}" class="card__button">Adicionar ao carrinho</a>
+                            </div>
+                        <!-- </div> -->
+                    </div>
+                </div>   
+            {% endif %}
+        {% endfor %}
+        </div>
+        <h2>Dor e febre</h2>
+        <div class="produtos" style="display: flex;overflow-x: auto;">
+        {% for produto in produtos%}    
+            {% if produto.tipo == 'Analgésicos' %}
+                <div class="container"> 
+                    <div class="card">
+                        <img src="{{produto.foto1}}" alt="" class="card__img"> 
+
+                        <!-- <div class="card__content">  -->
+                            <div class="card__data">
+                                <h1 class="card__title">{{produto.nome}}</h1>
+                                <span class="card__preci">R${{produto.valor}}</span>
+                                <p class="card__description">{{produto.desc}}</p>
+                                <a href="/produto/{{produto.cod_remedio}}" class="card__button">Adicionar ao carrinho</a>
+                            </div>
+                        <!-- </div> -->
+                    </div>
+                </div>   
+            {% endif %}
+        {% endfor %}
+        </div>
+        <h2>Mamãe e Bebê</h2>
+        <div class="produtos" style="display: flex;overflow-x: auto;">
+        {% for produto in produtos%}    
+            {% if produto.tipo == 'Mamãe e Bebê' %}
+                <div class="container"> 
+                    <div class="card">
+                        <img src="{{produto.foto1}}" alt="" class="card__img"> 
+
+                        <!-- <div class="card__content">  -->
+                            <div class="card__data">
+                                <h1 class="card__title">{{produto.nome}}</h1>
+                                <span class="card__preci">R${{produto.valor}}</span>
+                                <p class="card__description">{{produto.desc}}</p>
+                                <a href="/produto/{{produto.cod_remedio}}" class="card__button">Adicionar ao carrinho</a>
+                            </div>
+                        <!-- </div> -->
+                    </div>
+                </div>   
+            {% endif %}
+        {% endfor %}
+        </div>
+
+
+
+
 
 
     

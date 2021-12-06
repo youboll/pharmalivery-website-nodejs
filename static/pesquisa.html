@@ -1,12 +1,20 @@
 <html>
     <head>
         <!-- Pegar Icon de remédio ou fazer-->
-        <title>Index-Pharmalivery</title>
+        <title>Pharmalivery</title>
         <link rel="stylesheet" type="text/css" href="/header.css">
         <link rel="stylesheet" type="text/css" href="/index.css">
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css" >
         <link rel="stylesheet" href="/footer.css">
+        <style>
+            .vazioMsg{
+                margin-left: 39%;
+                color: #605f5f;
+                font-size: 120%;
+                margin-bottom: 15%;
+            }
+        </style>
     </head>
     <script>
         function menuToggle () {
@@ -37,7 +45,7 @@
                         <h3>{{userData.Nome}} </h3><span>Cliente Pharmalivery</span>
                         <ul>
                             <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                            <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                            
                             <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
 
                         </ul>
@@ -55,7 +63,7 @@
                             <h3>{{userData.nome_fantasia}}</h3><span>Loja Pharmalivery</span>
                             <ul>
                                 <li><img src="/shopping-cart.png"><a href="/carrinho">Carrinho de compras</a></li>
-                                <li><img src="/setting.png"><a href="#">Configurações da conta</a></li>
+                                
                                 <li><img src="/check-list.png"><a href="/loja/estoque">Gerenciar estoque</a></li>
                                 <li><img src="/logout.png"><a href="/logout?destination=/">Logout</a></li>
     
@@ -88,6 +96,10 @@
                 <!-- </div> -->
             </div>
         </div>   
+        {% else %}
+            <div class="vazioMsg">
+                Nenhum resultado encontrado
+            </div>
         {% endfor %}
     </div>
 

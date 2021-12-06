@@ -49,6 +49,7 @@ router.get('/entregador', (req,res) => {
     let user = new userData();
     let userInfo = user.getJWtByCookie(req);
     if (userInfo == false || userInfo == undefined) {res.redirect('/entregador/login');return(0);}
+    if (userInfo.type != "entregador") {res.redirect('/entregador/login');return(0);}
     let sql = "SELECT * FROM `pedido` INNER JOIN `remedios_pedido` ON remedios_pedido.cod_pedido = pedido.cod_pedido INNER JOIN remedios ON remedios.cod_remedio = remedios_pedido.cod_remedio WHERE pagamentoEfetuado = 1 AND entregaEfetuada = 0 AND atribuida=0;";
     db.query(sql,(error,results) => {
         if (results.length == 0 ) {res.render('entregador.html',{});return(0)}
