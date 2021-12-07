@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07-Dez-2021 às 01:10
+-- Tempo de geração: 07-Dez-2021 às 02:36
 -- Versão do servidor: 10.4.17-MariaDB
 -- versão do PHP: 8.0.0
 
@@ -121,7 +121,7 @@ CREATE TABLE `pedido` (
   `data_pedido` date DEFAULT NULL,
   `cpf` varchar(14) NOT NULL,
   `rua` varchar(50) NOT NULL,
-  `numero` int(11) NOT NULL,
+  `numero` varchar(15) NOT NULL,
   `bairro` varchar(50) NOT NULL,
   `cep` varchar(20) NOT NULL,
   `cidade` varchar(30) NOT NULL,
@@ -142,8 +142,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`cod_pedido`, `data_pedido`, `cpf`, `rua`, `numero`, `bairro`, `cep`, `cidade`, `estado`, `latitude`, `longitude`, `pagamentoEfetuado`, `atribuida`, `cpfEntregador`, `EntregaEfetuada`, `precoTotal`, `frete`, `preco`) VALUES
-(21, '2021-12-06', '111.111.111-11', 'undefined', 206, 'Jardim Brasil IV', '18960-000', 'Bernardino de Campos', 'SP', '-22.6393212', '-50.4023985', 1, 1, '222.222.222-22', 1, 7.99, 1, 6.99),
-(22, '2021-12-06', 'undefined', 'Rua das cerejeiras', 206, 'Jardim Brasil IV', '18960-000', 'Bernardino de Campos', 'SP', '-23.0153484', '-49.4824562', 1, 0, '', 0, 7.99, 1, 6.99);
+(21, '2021-12-06', '111.111.111-11', 'undefined', '206', 'Jardim Brasil IV', '18960-000', 'Bernardino de Campos', 'SP', '-22.6393212', '-50.4023985', 1, 1, '222.222.222-22', 1, 7.99, 1, 6.99),
+(22, '2021-12-06', 'undefined', 'Rua das cerejeiras', '206', 'Jardim Brasil IV', '18960-000', 'Bernardino de Campos', 'SP', '-23.0153484', '-49.4824562', 1, 0, '', 0, 7.99, 1, 6.99);
 
 -- --------------------------------------------------------
 
